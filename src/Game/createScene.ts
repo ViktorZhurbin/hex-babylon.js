@@ -5,7 +5,7 @@ import {
   MeshBuilder,
   Scene,
   Vector3,
-} from "babylonjs";
+} from "@babylonjs/core";
 
 export const createScene = (
   engine: Engine,
@@ -28,22 +28,19 @@ export const createScene = (
   // Default intensity is 1. This is dimmer.
   light.intensity = 0.7;
 
-  // A sphere!
-  const sphere = MeshBuilder.CreateSphere(
-    "sphere",
-    { diameter: 2, segments: 32 },
-    scene,
-  );
-  // Move the sphere upward 1.
-  sphere.position.y = 1;
+  // SceneLoader.ImportMesh("", "./hex.glb");
+  MeshBuilder.CreateCylinder("hex", {
+    diameter: 3,
+    height: 1,
+    tessellation: 6,
+  });
 
-  // A ground!
-  const ground = MeshBuilder.CreateGround(
-    "ground",
-    { height: 6, width: 6 },
-    scene,
-  );
-  ground.position.y = -1;
+  //handling of hex tile picking
+  scene.onPointerDown = (_, pickResult) => {
+    if (pickResult.pickedMesh) {
+      alert("You picked a hex tile!");
+    }
+  };
 
   return scene;
 };

@@ -17,17 +17,19 @@
   },
   "prettier": {},
   "devDependencies": {
+    "@babylonjs/inspector": "^6.13.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "eslint": "^8.45.0",
     "eslint-plugin-perfectionist": "^1.5.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
-    "typescript": "^5.0.2",
+    "prettier": "^3.0.0",
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "babylonjs": "^6.13.0",
-    "prettier": "^3.0.0"
+    "@babylonjs/core": "^6.13.0",
+    "@babylonjs/loaders": "^6.13.0",
+    "typescript": "^5.0.2"
   }
 }
