@@ -37,7 +37,7 @@ export const createScene = (engine: Engine, canvas: HTMLCanvasElement) => {
   // A ground!
   const ground = MeshBuilder.CreateGround(
     "ground",
-    { width: 6, height: 6 },
+    { height: 6, width: 6 },
     scene,
   );
   ground.position.y = -1;

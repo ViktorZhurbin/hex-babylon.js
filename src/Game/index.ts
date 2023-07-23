@@ -1,4 +1,5 @@
 import { Engine, Scene } from "babylonjs";
+
 import { createScene } from "./createScene";
 
 export class Game {
