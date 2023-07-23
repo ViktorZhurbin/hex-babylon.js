@@ -7,7 +7,10 @@ import {
   Vector3,
 } from "babylonjs";
 
-export const createScene = (engine: Engine, canvas: HTMLCanvasElement) => {
+export const createScene = (
+  engine: Engine,
+  canvas: HTMLCanvasElement,
+): Scene => {
   // The scene that holds our objects and camrea.
   const scene = new Scene(engine);
 

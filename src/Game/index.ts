@@ -1,33 +1,24 @@
-import { Engine, Scene } from "babylonjs";
+import { Engine } from "babylonjs";
 
 import { createScene } from "./createScene";
 
-export class Game {
-  engine: Engine;
-  scene: Scene;
+export const initGame = (canvas: HTMLCanvasElement) => {
+  const engine = new Engine(canvas);
 
-  constructor(readonly canvas: HTMLCanvasElement) {
-    this.engine = new Engine(canvas);
+  // resize the scene when the browser window changes.
+  window.addEventListener("resize", () => {
+    engine.resize();
+  });
 
-    // resize the scene when the browser window changes.
-    window.addEventListener("resize", () => {
-      this.engine.resize();
-    });
-    this.scene = createScene(this.engine, this.canvas);
+  const scene = createScene(engine, canvas);
+
+  if (import.meta.env.DEV) {
+    scene.debugLayer.show({ overlay: true });
+  } else {
+    scene.debugLayer.hide();
   }
 
-  debug() {
-    if (import.meta.env.DEV) {
-      this.scene.debugLayer.show({ overlay: true });
-    } else {
-      this.scene.debugLayer.hide();
-    }
-  }
-
-  run() {
-    this.debug();
-    this.engine.runRenderLoop(() => {
-      this.scene.render();
-    });
-  }
-}
+  engine.runRenderLoop(() => {
+    scene.render();
+  });
+};
