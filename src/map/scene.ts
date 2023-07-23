@@ -1,7 +1,7 @@
 import { Engine, Scene } from "@babylonjs/core";
 
 import { initCamera } from "./camera";
-import { createHexGrid } from "./hexGrid";
+import { createHexGrid } from "./hexGrid/createHexGrid";
 import { initLight } from "./light";
 import { setPointerEvents } from "./pointer";
 

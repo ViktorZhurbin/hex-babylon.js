@@ -1,6 +1,6 @@
 import "@babylonjs/loaders/glTF";
 
-import { initGame } from "./game";
+import { initGame } from "./map";
 import "./style.css";
 
 window.addEventListener("DOMContentLoaded", () => {
