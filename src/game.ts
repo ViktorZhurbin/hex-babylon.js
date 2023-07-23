@@ -37,11 +37,11 @@ export class Game {
   }
 }
 
-function createScene (engine: Engine, canvas: HTMLCanvasElement) {
+function createScene(engine: Engine, canvas: HTMLCanvasElement) {
   // The scene that holds our objects and camrea.
   const scene = new Scene(engine);
 
-	// The camera we will control to look around.
+  // The camera we will control to look around.
   const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
 
   // Point the camera to origin of the scene.
@@ -59,7 +59,7 @@ function createScene (engine: Engine, canvas: HTMLCanvasElement) {
   const sphere = MeshBuilder.CreateSphere(
     "sphere",
     { diameter: 2, segments: 32 },
-    scene
+    scene,
   );
   // Move the sphere upward 1.
   sphere.position.y = 1;
@@ -68,9 +68,9 @@ function createScene (engine: Engine, canvas: HTMLCanvasElement) {
   const ground = MeshBuilder.CreateGround(
     "ground",
     { width: 6, height: 6 },
-    scene
+    scene,
   );
   ground.position.y = -1;
 
   return scene;
-};
+}
