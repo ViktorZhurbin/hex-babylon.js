@@ -14,8 +14,8 @@ export const createScene = async function (
   const camera = initCamera(scene, canvas);
 
   initLight(scene);
-  await createHexGrid(camera, scene);
-  await setPointerEvents(scene);
+  createHexGrid(camera, scene);
+  setPointerEvents(scene);
 
   return scene;
 };
