@@ -30,7 +30,7 @@ const createHexTile = (scene: Scene) => {
 };
 
 //The math and properties for creating the hex grid.
-const gridSize = 2;
+const gridSize = 4;
 const hexLength = 1;
 const hexWidthDistance = Math.sqrt(3) * hexLength;
 const hexHeightDistance = 2 * hexLength;
