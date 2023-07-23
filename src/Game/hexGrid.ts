@@ -1,32 +1,43 @@
 import {
   ArcRotateCamera,
-  NodeMaterial,
+  Color3,
+  CreateCylinder,
   Scene,
-  SceneLoader,
+  StandardMaterial,
   Vector3,
 } from "@babylonjs/core";
+
+const createHexTile = (scene: Scene) => {
+  const hexTile = CreateCylinder(
+    "hexTileBase",
+    {
+      diameter: hexHeightDistance * 0.99,
+      height: 0.2,
+      tessellation: 6,
+    },
+    scene,
+  );
+
+  hexTile.rotation.y = 11;
+
+  const material = new StandardMaterial("material", scene);
+  const colorGreen = Color3.FromHexString("#4fc08d");
+  material.diffuseColor = colorGreen;
+  material.specularColor = colorGreen;
+  hexTile.material = material;
+
+  return hexTile;
+};
 
 //The math and properties for creating the hex grid.
 const gridSize = 2;
 const hexLength = 1;
 const hexWidthDistance = Math.sqrt(3) * hexLength;
 const hexHeightDistance = 2 * hexLength;
-let rowlengthAddition = 0;
+let rowLengthAddition = 0;
 
-export const createHexGrid = async (camera: ArcRotateCamera, scene: Scene) => {
-  //load an asset container for the hex tile
-  const hexTileImport = await SceneLoader.LoadAssetContainerAsync(
-    "https://assets.babylonjs.com/meshes/",
-    "hexTile.glb",
-    scene,
-  );
-
-  //Create and load a node material for the top water surface.
-  const waterMaterialTop = await NodeMaterial.ParseFromSnippetAsync(
-    "TD23TV#21",
-    scene,
-  );
-  waterMaterialTop.name = "waterMaterialTop";
+export const createHexGrid = (camera: ArcRotateCamera, scene: Scene) => {
+  const hexTileBase = createHexTile(scene);
 
   const gridStart = new Vector3(
     (hexWidthDistance / 2) * (gridSize - 1),
@@ -35,42 +46,19 @@ export const createHexGrid = async (camera: ArcRotateCamera, scene: Scene) => {
   );
 
   for (let i = 0; i < gridSize * 2 - 1; i++) {
-    for (let y = 0; y < gridSize + rowlengthAddition; y++) {
-      const hexTile = hexTileImport.instantiateModelsToScene();
-      const hexTileRoot = hexTile.rootNodes[0];
-      hexTileRoot.name = "hexTile" + i + y;
-      // @ts-expect-error adad
-      hexTileRoot.position.copyFrom(gridStart);
-      // @ts-expect-error adad
-      hexTileRoot.position.x -= hexWidthDistance * y;
+    for (let y = 0; y < gridSize + rowLengthAddition; y++) {
+      const hex = hexTileBase.clone(`hex-${i}-${y}`);
 
-      const hexChildren = hexTileRoot.getDescendants();
-      for (let k = 0; k < hexChildren.length; k++) {
-        hexChildren[k].name = hexChildren[k].name.slice(9);
-        if (hexChildren[k].name === "terrain") {
-          // @ts-expect-error adad
-          hexChildren[k].visibility = 0;
-        }
-      }
-
-      const hexTileChildMeshes = hexTileRoot.getChildMeshes();
-      for (let j = 0; j < hexTileChildMeshes.length; j++) {
-        if (hexTileChildMeshes[j].name === "top") {
-          hexTileChildMeshes[j].material = waterMaterialTop;
-          hexTileChildMeshes[j].hasVertexAlpha = false;
-        }
-      }
-
-      const hexTileAnimGroup = hexTile.animationGroups[0];
-      hexTileAnimGroup.name = "AnimGroup" + hexTileRoot.name;
+      hex.position.copyFrom(gridStart);
+      hex.position.x -= hexWidthDistance * y;
     }
 
     if (i >= gridSize - 1) {
-      rowlengthAddition -= 1;
+      rowLengthAddition -= 1;
       gridStart.x -= hexWidthDistance / 2;
       gridStart.z += hexHeightDistance * 0.75;
     } else {
-      rowlengthAddition += 1;
+      rowLengthAddition += 1;
       gridStart.x += hexWidthDistance / 2;
       gridStart.z += hexHeightDistance * 0.75;
     }
@@ -78,9 +66,4 @@ export const createHexGrid = async (camera: ArcRotateCamera, scene: Scene) => {
 
   camera.radius = gridSize * 5;
   camera.upperRadiusLimit = camera.radius + 5;
-
-  const allAnimGroups = scene.animationGroups;
-  for (let i = 0; i < allAnimGroups.length; i++) {
-    allAnimGroups[i].reset();
-  }
 };
