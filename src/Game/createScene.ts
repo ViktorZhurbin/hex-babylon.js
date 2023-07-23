@@ -1,43 +1,13 @@
 import {
   Engine,
-  Scene,
-  Vector3,
-  MeshBuilder,
   FreeCamera,
   HemisphericLight,
+  MeshBuilder,
+  Scene,
+  Vector3,
 } from "babylonjs";
 
-export class Game {
-  engine: Engine;
-  scene: Scene;
-
-  constructor(readonly canvas: HTMLCanvasElement) {
-    this.engine = new Engine(canvas);
-
-    // resize the scene when the browser window changes.
-    window.addEventListener("resize", () => {
-      this.engine.resize();
-    });
-    this.scene = createScene(this.engine, this.canvas);
-  }
-
-  debug() {
-    if (import.meta.env.DEV) {
-      this.scene.debugLayer.show({ overlay: true });
-    } else {
-      this.scene.debugLayer.hide();
-    }
-  }
-
-  run() {
-    this.debug();
-    this.engine.runRenderLoop(() => {
-      this.scene.render();
-    });
-  }
-}
-
-function createScene(engine: Engine, canvas: HTMLCanvasElement) {
+export const createScene = (engine: Engine, canvas: HTMLCanvasElement) => {
   // The scene that holds our objects and camrea.
   const scene = new Scene(engine);
 
@@ -73,4 +43,4 @@ function createScene(engine: Engine, canvas: HTMLCanvasElement) {
   ground.position.y = -1;
 
   return scene;
-}
+};
