@@ -1,3 +1,5 @@
+import "@babylonjs/loaders/glTF";
+
 import { initGame } from "./game";
 import "./style.css";
 
