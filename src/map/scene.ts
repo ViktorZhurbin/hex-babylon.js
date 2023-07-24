@@ -3,7 +3,6 @@ import { Engine, Scene } from "@babylonjs/core";
 import { initCamera } from "./camera";
 import { createHexGrid } from "./hexGrid/createHexGrid";
 import { initLight } from "./light";
-import { setPointerEvents } from "./pointer";
 
 export const createScene = async function (
   engine: Engine,
@@ -11,11 +10,10 @@ export const createScene = async function (
 ) {
   // This creates a basic Babylon Scene object (non-mesh)
   const scene = new Scene(engine);
-  const camera = initCamera(scene, canvas);
 
+  initCamera(scene, canvas);
   initLight(scene);
-  createHexGrid(camera, scene);
-  setPointerEvents(scene);
+  createHexGrid(scene);
 
   return scene;
 };

@@ -9,4 +9,6 @@ const Hex = {
   Width: HEX_WIDTH,
 };
 
-export { Hex };
+const hexTileBaseId = "hexTileBase";
+
+export { Hex, hexTileBaseId };

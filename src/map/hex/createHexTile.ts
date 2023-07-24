@@ -1,18 +1,16 @@
 import {
   CreateCylinder,
-  HighlightLayer,
-  Mesh,
   Scene,
   StandardMaterial,
   Tools,
 } from "@babylonjs/core";
 
-import { Hex } from "./constants";
+import { Hex, hexTileBaseId } from "./constants";
 import { Colors3 } from "./constants/colors";
 
-const createHexTile = (scene: Scene) => {
+export const createHexTile = (scene: Scene) => {
   const hexTile = CreateCylinder(
-    "hexTileBase",
+    hexTileBaseId,
     {
       diameter: Hex.Height * 0.99,
       height: 0.2,
@@ -31,10 +29,3 @@ const createHexTile = (scene: Scene) => {
 
   return hexTile;
 };
-
-const handleClickHex = (mesh: Mesh, scene: Scene) => {
-  const hl = new HighlightLayer("hl1", scene);
-  hl.addMesh(mesh, Colors3.selected);
-};
-
-export { createHexTile, handleClickHex };

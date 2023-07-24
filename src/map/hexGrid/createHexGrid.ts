@@ -1,8 +1,9 @@
-import { ArcRotateCamera, Scene, Vector3 } from "@babylonjs/core";
+import { Scene, Vector3 } from "@babylonjs/core";
 
 import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
-import { Hex } from "../hex/constants";
+import { Hex, hexTileBaseId } from "../hex/constants";
 import { createHexTile } from "../hex/createHexTile";
+import { setOnClickHex } from "../hex/onPointer";
 import { Grid } from "./constants";
 
 // Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
@@ -20,19 +21,22 @@ const getGridStart = () => {
   return new Vector3(x, y, z);
 };
 
-export const createHexGrid = (camera: ArcRotateCamera, scene: Scene) => {
+export const createHexGrid = (scene: Scene) => {
   const hexTileBase = createHexTile(scene);
+  setOnClickHex(scene);
+
   // eslint-disable-next-line prefer-const
   let currVector = getGridStart();
 
   let lastCol = Grid.Side;
   for (let rowIndex = 0; rowIndex < Grid.Rows; rowIndex++) {
     for (let colIndex = 0; colIndex < lastCol; colIndex++) {
-      const label = `${rowIndex}-${colIndex}`;
-      const hex = hexTileBase.clone(label);
+      const coordLabel = `${rowIndex}-${colIndex}`;
+      const name = `${hexTileBaseId} - ${coordLabel}`;
+      const hex = hexTileBase.clone(name);
 
       if (import.meta.env.DEV) {
-        addDebugValuesToHex(scene, hex, label);
+        addDebugValuesToHex(scene, hex, coordLabel);
       }
 
       hex.position.copyFrom(currVector);
@@ -46,7 +50,4 @@ export const createHexGrid = (camera: ArcRotateCamera, scene: Scene) => {
     currVector.x += Hex.Radius * modifier;
     currVector.z += offsetZ;
   }
-
-  camera.radius = Grid.Side * 5;
-  camera.upperRadiusLimit = camera.radius + 5;
 };
