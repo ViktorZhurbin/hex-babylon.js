@@ -3,22 +3,26 @@ import { Color3, HighlightLayer, Mesh, Scene } from "@babylonjs/core";
 import { hexTileBaseId } from "./constants";
 
 export const setOnClickHex = (scene: Scene) => {
-  const hl = new HighlightLayer("hl1", scene);
-  let lastMesh: Mesh | null = null;
+  const hl = new HighlightLayer("hexHighlight", scene);
 
-  scene.onPointerDown = (_, pickResult) => {
-    if (pickResult.hit && pickResult.pickedMesh) {
-      const pickedMesh = pickResult.pickedMesh as Mesh;
-      const isHexTile = pickedMesh.id.includes(hexTileBaseId);
+  let selectedHex: Mesh | null = null;
 
-      if (!isHexTile) return;
-
-      if (lastMesh) {
-        hl.removeMesh(lastMesh);
-      }
-
-      hl.addMesh(pickedMesh, Color3.Green());
-      lastMesh = pickedMesh;
+  scene.onPointerDown = (_, { hit, pickedMesh }) => {
+    if (!hit || !pickedMesh || !pickedMesh.id.includes(hexTileBaseId)) {
+      return;
     }
+
+    const currentHex = pickedMesh as Mesh;
+    const isSameHex = selectedHex?.id === currentHex.id;
+
+    if (selectedHex) {
+      hl.removeMesh(selectedHex);
+      selectedHex = null;
+
+      if (isSameHex) return;
+    }
+
+    hl.addMesh(currentHex, Color3.Green());
+    selectedHex = currentHex;
   };
 };

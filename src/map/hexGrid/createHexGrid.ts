@@ -1,7 +1,7 @@
 import { Scene, Vector3 } from "@babylonjs/core";
 
 import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
-import { Hex, hexTileBaseId } from "../hex/constants";
+import { Hex } from "../hex/constants";
 import { createHexTile } from "../hex/createHexTile";
 import { setOnClickHex } from "../hex/onPointer";
 import { Grid } from "./constants";
@@ -28,12 +28,14 @@ export const createHexGrid = (scene: Scene) => {
   // eslint-disable-next-line prefer-const
   let currVector = getGridStart();
 
-  let lastCol = Grid.Side;
-  for (let rowIndex = 0; rowIndex < Grid.Rows; rowIndex++) {
+  for (
+    let rowIndex = 0, lastCol = Grid.Side;
+    rowIndex < Grid.Rows;
+    rowIndex++
+  ) {
     for (let colIndex = 0; colIndex < lastCol; colIndex++) {
       const coordLabel = `${rowIndex}-${colIndex}`;
-      const name = `${hexTileBaseId} - ${coordLabel}`;
-      const hex = hexTileBase.clone(name);
+      const hex = hexTileBase.clone(coordLabel);
 
       if (import.meta.env.DEV) {
         addDebugValuesToHex(scene, hex, coordLabel);
@@ -50,4 +52,6 @@ export const createHexGrid = (scene: Scene) => {
     currVector.x += Hex.Radius * modifier;
     currVector.z += offsetZ;
   }
+
+  hexTileBase.dispose();
 };
