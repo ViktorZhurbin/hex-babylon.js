@@ -1,49 +1,52 @@
 import { ArcRotateCamera, Scene, Vector3 } from "@babylonjs/core";
 
-import { GRID_ROWS, GRID_SIDE, HEX_HEIGHT, HEX_WIDTH } from "./constants";
-import { addDebugValues, createHexTile } from "./createHexTile";
+import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
+import { Hex } from "../hex/constants";
+import { createHexTile } from "../hex/createHexTile";
+import { Grid } from "./constants";
 
-let rowLengthAddition = 0;
-
-// Copied from: https://youtu.be/xOw31J8JFqA?t=76
+// Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
 // Reference: https://www.redblobgames.com/grids/hexagons/
+const offsetZ = Hex.Height * 0.75;
+const middleRow = Grid.Side;
+
 const getGridStart = () => {
-  const x = (HEX_WIDTH / 2) * (GRID_SIDE - 1);
+  const initialLastColIndex = Grid.Side - 1;
+
+  const x = Hex.Radius * initialLastColIndex;
+  const z = -(offsetZ * initialLastColIndex);
   const y = 0;
-  const z = -(HEX_HEIGHT * 0.75 * (GRID_SIDE - 1));
 
   return new Vector3(x, y, z);
 };
 
 export const createHexGrid = (camera: ArcRotateCamera, scene: Scene) => {
   const hexTileBase = createHexTile(scene);
-  const gridStart = getGridStart();
+  // eslint-disable-next-line prefer-const
+  let currVector = getGridStart();
 
-  for (let rowIndex = 0; rowIndex < GRID_ROWS - 1; rowIndex++) {
-    for (
-      let colIndex = 0;
-      colIndex < GRID_SIDE + rowLengthAddition;
-      colIndex++
-    ) {
+  let lastCol = Grid.Side;
+  for (let rowIndex = 0; rowIndex < Grid.Rows; rowIndex++) {
+    for (let colIndex = 0; colIndex < lastCol; colIndex++) {
       const label = `${rowIndex}-${colIndex}`;
       const hex = hexTileBase.clone(label);
 
       if (import.meta.env.DEV) {
-        addDebugValues(scene, hex, label);
+        addDebugValuesToHex(scene, hex, label);
       }
 
-      hex.position.copyFrom(gridStart);
-      hex.position.x -= HEX_WIDTH * colIndex;
+      hex.position.copyFrom(currVector);
+      hex.position.x -= Hex.Width * colIndex;
     }
 
-    const isGrowing = rowIndex < GRID_SIDE - 1;
-    const multiplier = isGrowing ? 1 : -1;
+    const isGrowing = rowIndex < middleRow - 1;
+    const modifier = isGrowing ? 1 : -1;
 
-    gridStart.x += (HEX_WIDTH / 2) * multiplier;
-    rowLengthAddition += multiplier;
-    gridStart.z += HEX_HEIGHT * 0.75;
+    lastCol += modifier;
+    currVector.x += Hex.Radius * modifier;
+    currVector.z += offsetZ;
   }
 
-  camera.radius = GRID_SIDE * 5;
+  camera.radius = Grid.Side * 5;
   camera.upperRadiusLimit = camera.radius + 5;
 };
