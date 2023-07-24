@@ -17,6 +17,8 @@ const Colors = {
   selected: Color3.FromHexString("#1d5039"),
 };
 
+const HEX_ROTATION = 150;
+
 const createHexTile = (scene: Scene) => {
   const hexTile = CreateCylinder(
     "hexTileBase",
@@ -28,7 +30,7 @@ const createHexTile = (scene: Scene) => {
     scene,
   );
 
-  hexTile.rotation.y = Tools.ToRadians(30);
+  hexTile.rotation.y = Tools.ToRadians(HEX_ROTATION);
 
   const material = new StandardMaterial("material", scene);
   const colorGreen = Colors.default;
@@ -60,7 +62,7 @@ const addDebugValues = (scene: Scene, hex: Mesh, text: string) => {
   const material = new StandardMaterial("mat", scene);
   material.diffuseTexture = dynamicTexture;
   hex.material = material;
-  hex.rotation.y = Tools.ToRadians(150);
+  hex.rotation.y = Tools.ToRadians(HEX_ROTATION);
 };
 
 export { addDebugValues, createHexTile };
