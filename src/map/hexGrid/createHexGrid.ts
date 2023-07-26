@@ -4,15 +4,15 @@ import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
 import { Hex } from "../hex/constants";
 import { createHexTile } from "../hex/createHexTile";
 import { setOnClickHex } from "../hex/onPointer";
-import { Grid } from "./constants";
+import { getGrid } from "./constants";
+import { createHexId } from "./utils/createHexId";
 
 // Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
 // Reference: https://www.redblobgames.com/grids/hexagons/
 const offsetZ = Hex.Height * 0.75;
-const middleRow = Grid.Side;
 
-const getGridStart = () => {
-  const initialLastColIndex = Grid.Side - 1;
+const getGridStart = (Grid: ReturnType<typeof getGrid>) => {
+  const initialLastColIndex = Grid.SideLength - 1;
 
   const x = Hex.Radius * initialLastColIndex;
   const z = -(offsetZ * initialLastColIndex);
@@ -21,26 +21,29 @@ const getGridStart = () => {
   return new Vector3(x, y, z);
 };
 
-export const createHexGrid = (scene: Scene) => {
+export const createHexGrid = (tribesCount: number, scene: Scene) => {
   const hexTileBase = createHexTile(scene);
   setOnClickHex(scene);
 
+  const Grid = getGrid(tribesCount);
+  const middleRow = Grid.SideLength;
   // eslint-disable-next-line prefer-const
-  let currVector = getGridStart();
+  let currVector = getGridStart(Grid);
 
   for (
-    let rowIndex = 0, lastCol = Grid.Side;
-    rowIndex < Grid.Rows;
+    let rowIndex = 0, lastCol = Grid.SideLength;
+    rowIndex < Grid.RowsCount;
     rowIndex++
   ) {
     for (let colIndex = 0; colIndex < lastCol; colIndex++) {
-      const coordLabel = `${rowIndex}-${colIndex}`;
+      const coordLabel = createHexId({ col: colIndex, row: rowIndex });
       const hex = hexTileBase.clone(coordLabel);
 
       if (import.meta.env.DEV) {
         addDebugValuesToHex(scene, hex, coordLabel);
       }
 
+      hex.id = coordLabel;
       hex.position.copyFrom(currVector);
       hex.position.x -= Hex.Width * colIndex;
     }
