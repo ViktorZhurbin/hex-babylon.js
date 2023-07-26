@@ -23,7 +23,8 @@ export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
     const hex = scene.getMeshById(hexId);
 
     if (hex) {
-      unit.position.copyFrom(hex.position);
+      unit.position.x = hex.position.x;
+      unit.position.z = hex.position.z;
       unit.metadata = { hex };
       hex.metadata = { unit };
     }

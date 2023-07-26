@@ -22,5 +22,8 @@ export const createUnit = (scene: Scene) => {
   baseUnitMaterial.specularColor = Color3.White();
   unit.material = baseUnitMaterial;
 
+  // place on top of the tiles
+  unit.position.y = 0.6;
+
   return unit;
 };

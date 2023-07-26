@@ -35,12 +35,13 @@ export const onPickHex = (
 
   if (!isHexWithUnit && selectedUnit) {
     // move unit to new hex
-    selectedUnit.position.copyFrom(hexMesh.position);
+    selectedUnit.position.x = hexMesh.position.x;
+    selectedUnit.position.z = hexMesh.position.z;
 
     // unlink unit from prev hex
     selectedUnit.metadata.hex.metadata.unit = null;
 
-    // link new hex and moved unit
+    // link new hex with unit
     selectedUnit.metadata.hex = hexMesh;
     hexMesh.metadata.unit = selectedUnit;
 
