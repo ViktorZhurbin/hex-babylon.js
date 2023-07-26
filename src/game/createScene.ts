@@ -4,6 +4,7 @@ import { Tribes } from "../constants/tribe";
 import { createHexGrid } from "../map/hexGrid/createHexGrid";
 import { createInitialUnits } from "../units/createInitialUnits";
 import { initCamera } from "./initCamera";
+import { initControls } from "./initControls";
 import { initLight } from "./initLlight";
 
 export const createScene = async function (
@@ -15,6 +16,7 @@ export const createScene = async function (
 
   initCamera(scene, canvas);
   initLight(scene);
+  initControls(scene);
 
   const tribes = [Tribes.tribeOne, Tribes.tribeTwo];
   createHexGrid(tribes.length, scene);

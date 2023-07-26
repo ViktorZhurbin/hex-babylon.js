@@ -3,7 +3,6 @@ import { Scene, Vector3 } from "@babylonjs/core";
 import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
 import { Hex } from "../hex/constants";
 import { createHexTile } from "../hex/createHexTile";
-import { setOnClickHex } from "../hex/onPointer";
 import { getGrid } from "./constants";
 import { createHexId } from "./utils/createHexId";
 
@@ -23,7 +22,6 @@ const getGridStart = (Grid: ReturnType<typeof getGrid>) => {
 
 export const createHexGrid = (tribesCount: number, scene: Scene) => {
   const hexTileBase = createHexTile(scene);
-  setOnClickHex(scene);
 
   const Grid = getGrid(tribesCount);
   const middleRow = Grid.SideLength;
@@ -44,6 +42,7 @@ export const createHexGrid = (tribesCount: number, scene: Scene) => {
       }
 
       hex.id = coordLabel;
+      hex.name = Hex.Name;
       hex.position.copyFrom(currVector);
       hex.position.x -= Hex.Width * colIndex;
     }

@@ -5,12 +5,12 @@ import {
   Tools,
 } from "@babylonjs/core";
 
-import { Hex, hexTileBaseId } from "./constants";
+import { Hex } from "./constants";
 import { Colors3 } from "./constants/colors";
 
 export const createHexTile = (scene: Scene) => {
   const hexTile = CreateCylinder(
-    hexTileBaseId,
+    Hex.Name,
     {
       diameter: Hex.Height * 0.99,
       height: 0.2,
