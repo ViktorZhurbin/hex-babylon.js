@@ -20,12 +20,12 @@ export const onPickHex = (
     return;
   }
 
-  if (isUnit) {
-    selectedUnit = pickedMesh as Mesh;
-  }
-
   const hexMesh = (isHex ? pickedMesh : pickedMesh.metadata.hex) as Mesh;
   const isHexWithUnit = isUnit || Boolean(pickedMesh.metadata?.unit);
+
+  if (isHexWithUnit) {
+    selectedUnit = (isUnit ? pickedMesh : pickedMesh.metadata.unit) as Mesh;
+  }
 
   if (highlight.hasMesh(hexMesh)) {
     highlight.removeMesh(hexMesh);
