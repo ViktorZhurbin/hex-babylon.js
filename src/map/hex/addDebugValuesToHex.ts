@@ -9,7 +9,12 @@ import {
 import { Hex } from "./constants";
 import { ColorsHex } from "./constants/colors";
 
-export const addDebugValuesToHex = (scene: Scene, hex: Mesh, text: string) => {
+export const addLabelToMesh = (
+  scene: Scene,
+  hex: Mesh,
+  text: string,
+  color: string,
+) => {
   const DTSize = Hex.Height * 50;
   const dynamicTexture = new DynamicTexture(
     "dTexture" + text,
@@ -24,11 +29,17 @@ export const addDebugValuesToHex = (scene: Scene, hex: Mesh, text: string) => {
     null,
     `12px`,
     "rgba(0, 0, 0, 0.57)",
-    ColorsHex.green,
+    color,
   );
 
   const material = new StandardMaterial("mat", scene);
   material.diffuseTexture = dynamicTexture;
   hex.material = material;
+  hex.rotation.y = Tools.ToRadians(Hex.Rotation);
+};
+
+export const addDebugValuesToHex = (scene: Scene, hex: Mesh, text: string) => {
+  addLabelToMesh(scene, hex, text, ColorsHex.green);
+
   hex.rotation.y = Tools.ToRadians(Hex.Rotation);
 };

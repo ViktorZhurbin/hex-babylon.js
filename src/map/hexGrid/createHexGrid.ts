@@ -45,6 +45,7 @@ export const createHexGrid = (tribesCount: number, scene: Scene) => {
       hex.name = Hex.Name;
       hex.position.copyFrom(currVector);
       hex.position.x -= Hex.Width * colIndex;
+      hex.metadata = { unit: null };
     }
 
     const isGrowing = rowIndex < middleRow - 1;
