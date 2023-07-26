@@ -5,9 +5,11 @@ import {
   StandardMaterial,
 } from "@babylonjs/core";
 
-export const createBaseUnit = (scene: Scene) => {
-  const baseUnit = CreateCylinder(
-    "baseUnit",
+import { Unit } from "./constants";
+
+export const createUnit = (scene: Scene) => {
+  const unit = CreateCylinder(
+    Unit.BaseName,
     {
       diameter: 1,
       height: 1,
@@ -18,7 +20,7 @@ export const createBaseUnit = (scene: Scene) => {
   const baseUnitMaterial = new StandardMaterial("material", scene);
   baseUnitMaterial.diffuseColor = Color3.White();
   baseUnitMaterial.specularColor = Color3.White();
-  baseUnit.material = baseUnitMaterial;
+  unit.material = baseUnitMaterial;
 
-  return baseUnit;
+  return unit;
 };

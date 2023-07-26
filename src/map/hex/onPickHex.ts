@@ -1,28 +1,31 @@
 import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
 
+import { Unit } from "../../units/constants";
 import { Hex } from "./constants";
-
-let selectedHex: Mesh | null = null;
 
 export const onPickHex = (
   { hit, pickedMesh }: PickingInfo,
   highlight: HighlightLayer,
 ) => {
-  console.log(selectedHex);
-  if (!hit || !pickedMesh || pickedMesh.name !== Hex.Name) {
+  if (!hit || !pickedMesh) {
     return;
   }
 
-  const currentHex = pickedMesh as Mesh;
-  const isSameHex = selectedHex?.id === currentHex.id;
+  const isHex = pickedMesh.name === Hex.Name;
+  const isUnit = pickedMesh.name === Unit.BaseName;
 
-  if (selectedHex) {
-    highlight.removeMesh(selectedHex);
-    selectedHex = null;
-
-    if (isSameHex) return;
+  if (!isHex && !isUnit) {
+    return;
   }
 
-  highlight.addMesh(currentHex, Color3.Green());
-  selectedHex = currentHex;
+  const hexMesh = (isHex ? pickedMesh : pickedMesh.metadata.hex) as Mesh;
+
+  if (highlight.hasMesh(hexMesh)) {
+    highlight.removeMesh(hexMesh);
+
+    return;
+  }
+
+  highlight.removeAllMeshes();
+  highlight.addMesh(hexMesh, Color3.Green());
 };
