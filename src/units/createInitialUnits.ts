@@ -2,7 +2,7 @@ import { Scene } from "@babylonjs/core";
 
 import { TTribes } from "../constants/tribe";
 import { addLabelToMesh } from "../map/hex/addDebugValuesToHex";
-import { createHexId } from "../map/hexGrid/utils/createHexId";
+import { HexId } from "../map/utils/hexId";
 import { createUnit } from "./baseUnit";
 import { getInitialUnits } from "./utils/getInitialUnits";
 import { getStartUnitPositions } from "./utils/getStartPositions";
@@ -19,13 +19,14 @@ export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
     }
 
     unit.id = unitId;
-    const hexId = createHexId({ col, row });
+    unit.metadata = { stats: units[unitId] };
+    const hexId = HexId.fromArray([row, col]);
     const hex = scene.getMeshById(hexId);
 
     if (hex) {
       unit.position.x = hex.position.x;
       unit.position.z = hex.position.z;
-      unit.metadata = { hex };
+      unit.metadata.hex = hex;
       hex.metadata = { unit };
     }
   });

@@ -3,8 +3,8 @@ import { Scene, Vector3 } from "@babylonjs/core";
 import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
 import { Hex } from "../hex/constants";
 import { createHexTile } from "../hex/createHexTile";
+import { HexId } from "../utils/hexId";
 import { getGrid } from "./constants";
-import { createHexId } from "./utils/createHexId";
 
 // Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
 // Reference: https://www.redblobgames.com/grids/hexagons/
@@ -34,7 +34,7 @@ export const createHexGrid = (tribesCount: number, scene: Scene) => {
     rowIndex++
   ) {
     for (let colIndex = 0; colIndex < lastCol; colIndex++) {
-      const coordLabel = createHexId({ col: colIndex, row: rowIndex });
+      const coordLabel = HexId.fromArray([rowIndex, colIndex]);
       const hex = hexTileBase.clone(coordLabel);
 
       if (import.meta.env.DEV) {

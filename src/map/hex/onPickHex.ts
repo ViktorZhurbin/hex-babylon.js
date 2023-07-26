@@ -1,9 +1,12 @@
 import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
 
 import { Unit } from "../../units/constants";
+import { getMoveArea } from "../../units/utils/getMovementArea";
+import { HexId } from "../utils/hexId";
 import { Hex } from "./constants";
 
 let selectedUnit: Mesh | null = null;
+let moveArea: Record<string, number[]> = {};
 
 export const onPickHex = (
   { hit, pickedMesh }: PickingInfo,
@@ -25,10 +28,19 @@ export const onPickHex = (
 
   if (isHexWithUnit) {
     selectedUnit = (isUnit ? pickedMesh : pickedMesh.metadata.unit) as Mesh;
+
+    const coords = HexId.toArray(selectedUnit.metadata.hex.id);
+
+    if (coords.length) {
+      moveArea = getMoveArea(coords, selectedUnit.metadata.stats.speed);
+
+      console.log(moveArea);
+    }
   }
 
   if (highlight.hasMesh(hexMesh)) {
     highlight.removeMesh(hexMesh);
+    moveArea = {};
 
     return;
   }
@@ -47,9 +59,12 @@ export const onPickHex = (
 
     highlight.removeAllMeshes();
     selectedUnit = null;
+    moveArea = {};
+
     return;
   }
 
   highlight.removeAllMeshes();
   highlight.addMesh(hexMesh, Color3.Green());
+  moveArea = {};
 };
