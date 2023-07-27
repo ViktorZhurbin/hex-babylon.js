@@ -1,10 +1,10 @@
 import { Scene } from "@babylonjs/core";
 
 import { TTribes } from "../constants/tribe";
-import { addLabelToMesh } from "../map/hex/addDebugValuesToHex";
-import { HexId } from "../map/utils/hexId";
+import { addLabelToMesh } from "../map/hex/addLabelToMesh";
 import { state$ } from "../state/state";
-import { createUnit } from "./baseUnit";
+import { HexId } from "../utils/hexId";
+import { createUnit } from "./createUnit";
 import { getInitialUnits } from "./utils/getInitialUnits";
 import { getStartUnitPositions } from "./utils/getStartPositions";
 

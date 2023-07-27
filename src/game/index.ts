@@ -1,7 +1,7 @@
 import { Engine } from "@babylonjs/core";
 
-import { createScene } from "./createScene";
-import { initDebugLayer } from "./initDebugLayer";
+import { initDebugLayer } from "./debugLayer";
+import { createScene } from "./scene";
 
 export const initGame = async (canvas: HTMLCanvasElement) => {
   const engine = new Engine(canvas);

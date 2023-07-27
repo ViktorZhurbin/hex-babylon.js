@@ -1,5 +1,5 @@
-import { HexId, THexIdArray } from "../../map/utils/hexId";
 import { state$ } from "../../state/state";
+import { HexId, THexIdArray } from "../../utils/hexId";
 
 const getAvailablePositions = (positionIndex: number, speed: number) => {
   const positions = [];

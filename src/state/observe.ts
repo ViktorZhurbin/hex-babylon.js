@@ -1,12 +1,15 @@
-import { Colors3 } from "../map/hex/constants/colors";
-import { createStandardColoredMaterial } from "../map/hex/utils/colorHex";
+import { HexColors3 } from "../map/constants/colors";
+import { createStandardColoredMaterial } from "../utils/createStandardColoredMaterial";
 import { State, state$ } from "./state";
 
 export const setMoveArea: State["setMoveArea"] = (moveArea) => {
   const prevMoveArea = state$.moveArea.peek();
   const scene = state$.scene.peek();
 
-  const defaultMaterial = createStandardColoredMaterial(Colors3.default, scene);
+  const defaultMaterial = createStandardColoredMaterial(
+    HexColors3.default,
+    scene,
+  );
 
   prevMoveArea.forEach((hexId) => {
     const hex = scene.getMeshById(hexId);
@@ -17,7 +20,7 @@ export const setMoveArea: State["setMoveArea"] = (moveArea) => {
   });
 
   const highlightedMaterial = createStandardColoredMaterial(
-    Colors3.highlighted,
+    HexColors3.highlighted,
     scene,
   );
 

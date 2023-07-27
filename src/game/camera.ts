@@ -1,6 +1,6 @@
 import { ArcRotateCamera, Scene, Tools, Vector3 } from "@babylonjs/core";
 
-import { SIDE_LENGTH_PER_TRIBE } from "../map/hexGrid/constants";
+import { SIDE_LENGTH_PER_TRIBE } from "../map/constants/grid";
 
 export const initCamera = (scene: Scene, canvas: HTMLCanvasElement) => {
   const camera = new ArcRotateCamera(

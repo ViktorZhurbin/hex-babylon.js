@@ -1,5 +1,5 @@
 import { TTribes } from "../../constants/tribe";
-import { SIDE_LENGTH_PER_TRIBE } from "../../map/hexGrid/constants";
+import { SIDE_LENGTH_PER_TRIBE } from "../../map/constants/grid";
 import { getInitialUnits } from "./getInitialUnits";
 
 const getStartPositions = (tribesCount: number) => {

@@ -1,11 +1,11 @@
 import { Scene, Vector3 } from "@babylonjs/core";
 
 import { state$ } from "../../state/state";
-import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
-import { Hex } from "../hex/constants";
-import { createHexTile } from "../hex/createHexTile";
-import { HexId } from "../utils/hexId";
-import { getGrid } from "./constants";
+import { HexId } from "../../utils/hexId";
+import { getGrid } from "../constants/grid";
+import { Hex } from "../constants/hex";
+import { addDebugValuesToHex } from "../hex/addLabelToMesh";
+import { createHex } from "../hex/createHex";
 
 // Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
 // Reference: https://www.redblobgames.com/grids/hexagons/
@@ -21,8 +21,8 @@ const getGridStart = (Grid: ReturnType<typeof getGrid>) => {
   return new Vector3(x, y, z);
 };
 
-export const createHexGrid = (tribesCount: number, scene: Scene) => {
-  const hexTileBase = createHexTile(scene);
+export const createGrid = (tribesCount: number, scene: Scene) => {
+  const hexTileBase = createHex(scene);
 
   const Grid = getGrid(tribesCount);
   state$.grid.set(Grid);

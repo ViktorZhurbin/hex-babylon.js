@@ -6,8 +6,8 @@ import {
   Tools,
 } from "@babylonjs/core";
 
-import { Hex } from "./constants";
-import { ColorsHex } from "./constants/colors";
+import { Colors } from "../constants/colors";
+import { Hex } from "../constants/hex";
 
 export const addLabelToMesh = (
   scene: Scene,
@@ -39,7 +39,7 @@ export const addLabelToMesh = (
 };
 
 export const addDebugValuesToHex = (scene: Scene, hex: Mesh, text: string) => {
-  addLabelToMesh(scene, hex, text, ColorsHex.green);
+  addLabelToMesh(scene, hex, text, Colors.green);
 
   hex.rotation.y = Tools.ToRadians(Hex.Rotation);
 };

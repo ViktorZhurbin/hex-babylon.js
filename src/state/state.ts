@@ -1,9 +1,9 @@
 import { Scene } from "@babylonjs/core";
 import { observable } from "@legendapp/state";
 
-import { THexId } from "../map/utils/hexId";
 import { THex } from "../types/map";
 import { TUnitInstance } from "../types/unit";
+import { THexId } from "../utils/hexId";
 import { setMoveArea } from "./observe";
 
 export type State = {

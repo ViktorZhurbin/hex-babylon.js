@@ -1,12 +1,12 @@
 import { Engine, Scene } from "@babylonjs/core";
 
 import { Tribes } from "../constants/tribe";
-import { createHexGrid } from "../map/hexGrid/createHexGrid";
+import { createGrid } from "../map/grid/createGrid";
 import { state$ } from "../state/state";
 import { createInitialUnits } from "../units/createInitialUnits";
-import { initCamera } from "./initCamera";
-import { initControls } from "./initControls";
-import { initLight } from "./initLlight";
+import { initCamera } from "./camera";
+import { initControls } from "./controls";
+import { initLight } from "./llight";
 
 export const createScene = async function (
   engine: Engine,
@@ -20,7 +20,7 @@ export const createScene = async function (
   initControls(scene);
 
   const tribes = [Tribes.tribeOne, Tribes.tribeTwo];
-  createHexGrid(tribes.length, scene);
+  createGrid(tribes.length, scene);
   createInitialUnits(tribes, scene);
 
   state$.scene.set(scene);
