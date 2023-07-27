@@ -9,14 +9,16 @@ import { Hex } from "../constants/hex";
 
 const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
   const scene = state$.scene.get();
+  const selectedHex = state$.selectedHex.get();
+  const moveArea = state$.moveArea.get();
 
-  if (!scene) {
+  if (!moveArea.includes(nextHexId)) {
     return;
   }
 
-  const selectedHex = state$.selectedHex.get();
   const prevHexMesh = scene.getMeshById(prevHex.id);
   const nextHexMesh = scene.getMeshById(nextHexId);
+
   const unitMesh = scene.getMeshById(prevHex.unitId);
 
   if (prevHexMesh && nextHexMesh && unitMesh) {

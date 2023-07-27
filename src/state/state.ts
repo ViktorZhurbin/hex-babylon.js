@@ -3,7 +3,6 @@ import { observable } from "@legendapp/state";
 
 import { THex } from "../types/map";
 import { TUnitInstance } from "../types/unit";
-import { THexId } from "../utils/hexId";
 import { setMoveArea } from "./setMoveArea";
 
 export type State = {
@@ -11,10 +10,10 @@ export type State = {
     RowsCount: number;
     SideLength: number;
   };
-  moveArea: THexId[];
+  moveArea: string[];
   scene: Scene | null;
   selectedHex: THex | null;
-  setMoveArea: (moveArea: THexId[]) => void;
+  setMoveArea: (moveArea: State["moveArea"]) => void;
   units: Record<string, TUnitInstance>;
 };
 
