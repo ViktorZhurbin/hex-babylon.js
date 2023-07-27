@@ -1,12 +1,39 @@
 import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
 
+import { state$ } from "../../state";
+import { HexWithUnitId, THex } from "../../types/map";
 import { Unit } from "../../units/constants";
 import { getMoveArea } from "../../units/utils/getMovementArea";
 import { HexId } from "../utils/hexId";
 import { Hex } from "./constants";
 
-let selectedUnit: Mesh | null = null;
-let moveArea: Record<string, number[]> = {};
+const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
+  const scene = state$.scene.get();
+
+  if (!scene) {
+    return;
+  }
+
+  const selectedHex = state$.selectedHex.get();
+  const prevHexMesh = scene.getMeshById(prevHex.id);
+  const nextHexMesh = scene.getMeshById(nextHexId);
+  const unitMesh = scene.getMeshById(prevHex.unitId);
+
+  if (prevHexMesh && nextHexMesh && unitMesh) {
+    unitMesh.position.x = nextHexMesh.position.x;
+    unitMesh.position.z = nextHexMesh.position.z;
+    unitMesh.metadata.hex = nextHexMesh;
+
+    nextHexMesh.metadata.unitId = selectedHex.unitId;
+    prevHexMesh.metadata.unitId = null;
+  }
+};
+
+const handleCleanUp = (highlight: HighlightLayer) => {
+  state$.moveArea.set({});
+  state$.selectedHex.set(null);
+  highlight.removeAllMeshes();
+};
 
 export const onPickHex = (
   { hit, pickedMesh }: PickingInfo,
@@ -23,48 +50,53 @@ export const onPickHex = (
     return;
   }
 
-  const hexMesh = (isHex ? pickedMesh : pickedMesh.metadata.hex) as Mesh;
-  const isHexWithUnit = isUnit || Boolean(pickedMesh.metadata?.unit);
+  const nextHexMesh = (isHex ? pickedMesh : pickedMesh.metadata.hex) as Mesh;
+  const nextHexUnitId = isUnit ? pickedMesh.id : pickedMesh.metadata?.unitId;
 
-  if (isHexWithUnit) {
-    selectedUnit = (isUnit ? pickedMesh : pickedMesh.metadata.unit) as Mesh;
+  const selectedHex = state$.selectedHex.get();
 
-    const coords = HexId.toArray(selectedUnit.metadata.hex.id);
+  // is same tile
+  if (selectedHex?.id === nextHexMesh?.id) {
+    handleCleanUp(highlight);
+
+    return;
+  }
+
+  // move unit
+  if (selectedHex?.unitId && !nextHexUnitId) {
+    handleMoveUnit(
+      { id: selectedHex.id, unitId: selectedHex.unitId },
+      nextHexMesh.id,
+    );
+
+    handleCleanUp(highlight);
+
+    return;
+  }
+
+  // mark selected
+  state$.selectedHex.set({
+    id: nextHexMesh.id,
+    unitId: nextHexUnitId,
+  });
+
+  // if tile has unit
+  if (nextHexUnitId) {
+    const coords = HexId.toArray(nextHexMesh.id);
 
     if (coords.length) {
-      moveArea = getMoveArea(coords, selectedUnit.metadata.stats.speed);
+      const units = state$.units.get();
+      const unit = units[nextHexUnitId];
+      const moveArea = getMoveArea(coords, unit.speed);
+      state$.moveArea.set(moveArea);
 
-      console.log(moveArea);
+      // console.log(moveArea);
     }
-  }
-
-  if (highlight.hasMesh(hexMesh)) {
-    highlight.removeMesh(hexMesh);
-    moveArea = {};
-
-    return;
-  }
-
-  if (!isHexWithUnit && selectedUnit) {
-    // move unit to new hex
-    selectedUnit.position.x = hexMesh.position.x;
-    selectedUnit.position.z = hexMesh.position.z;
-
-    // unlink unit from prev hex
-    selectedUnit.metadata.hex.metadata.unit = null;
-
-    // link new hex with unit
-    selectedUnit.metadata.hex = hexMesh;
-    hexMesh.metadata.unit = selectedUnit;
-
-    highlight.removeAllMeshes();
-    selectedUnit = null;
-    moveArea = {};
-
-    return;
+  } else {
+    state$.moveArea.set({});
   }
 
   highlight.removeAllMeshes();
-  highlight.addMesh(hexMesh, Color3.Green());
-  moveArea = {};
+  highlight.addMesh(nextHexMesh, Color3.Green());
+  // state$.moveArea.set({});
 };

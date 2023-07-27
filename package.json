@@ -30,6 +30,7 @@
   "dependencies": {
     "@babylonjs/core": "^6.13.0",
     "@babylonjs/loaders": "^6.13.0",
+    "@legendapp/state": "^1.6.3",
     "typescript": "^5.0.2"
   }
 }
