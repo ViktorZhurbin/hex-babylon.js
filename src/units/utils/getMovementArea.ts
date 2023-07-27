@@ -1,5 +1,5 @@
 import { state$ } from "../../state/state";
-import { HexId, THexIdArray } from "../../utils/hexId";
+import { HexId } from "../../utils/hexId";
 
 const getAvailablePositions = (positionIndex: number, speed: number) => {
   const positions = [];
@@ -15,7 +15,7 @@ const getAvailablePositions = (positionIndex: number, speed: number) => {
   return positions;
 };
 
-export const getMoveArea = (coords: THexIdArray, speed: number) => {
+export const getMoveArea = (coords: number[], speed: number) => {
   const [row, col] = coords;
   const rows = getAvailablePositions(row, speed);
   const Grid = state$.grid.get();
