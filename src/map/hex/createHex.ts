@@ -1,7 +1,6 @@
 import { CreateCylinder, Scene, Tools } from "@babylonjs/core";
 
-import { createStandardColoredMaterial } from "../../utils/createStandardColoredMaterial";
-import { HexColors3 } from "../constants/colors";
+import { createHexMaterial } from "../../utils/createHexMaterial";
 import { Hex } from "../constants/hex";
 
 export const createHex = (scene: Scene) => {
@@ -17,7 +16,7 @@ export const createHex = (scene: Scene) => {
 
   hexTile.rotation.y = Tools.ToRadians(Hex.Rotation);
 
-  const material = createStandardColoredMaterial(HexColors3.default, scene);
+  const material = createHexMaterial({ scene });
   hexTile.material = material;
 
   return hexTile;

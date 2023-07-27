@@ -1,8 +1,8 @@
 import { Scene } from "@babylonjs/core";
 
 import { TTribes } from "../constants/tribe";
-import { addLabelToMesh } from "../map/hex/addLabelToMesh";
 import { state$ } from "../state/state";
+import { addLabelToMesh } from "../utils/addLabelToMesh";
 import { HexId } from "../utils/hexId";
 import { createUnit } from "./createUnit";
 import { getInitialUnits } from "./utils/getInitialUnits";
@@ -17,7 +17,12 @@ export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
     const unit = createUnit(scene);
 
     if (import.meta.env.DEV) {
-      addLabelToMesh(scene, unit, units[unitId].type, "#fff");
+      addLabelToMesh({
+        bgColor: "#fff",
+        mesh: unit,
+        scene,
+        text: units[unitId].type,
+      });
     }
 
     unit.id = unitId;

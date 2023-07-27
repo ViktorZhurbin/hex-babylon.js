@@ -4,7 +4,7 @@ import { observable } from "@legendapp/state";
 import { THex } from "../types/map";
 import { TUnitInstance } from "../types/unit";
 import { THexId } from "../utils/hexId";
-import { setMoveArea } from "./observe";
+import { setMoveArea } from "./setMoveArea";
 
 export type State = {
   grid: {

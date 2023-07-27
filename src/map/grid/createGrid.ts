@@ -1,10 +1,10 @@
 import { Scene, Vector3 } from "@babylonjs/core";
 
 import { state$ } from "../../state/state";
+import { createHexMaterial } from "../../utils/createHexMaterial";
 import { HexId } from "../../utils/hexId";
 import { getGrid } from "../constants/grid";
 import { Hex } from "../constants/hex";
-import { addDebugValuesToHex } from "../hex/addLabelToMesh";
 import { createHex } from "../hex/createHex";
 
 // Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
@@ -41,7 +41,9 @@ export const createGrid = (tribesCount: number, scene: Scene) => {
       const hex = hexTileBase.clone(coordLabel);
 
       if (import.meta.env.DEV) {
-        addDebugValuesToHex(scene, hex, coordLabel);
+        const material = createHexMaterial({ label: coordLabel, scene });
+
+        hex.material = material;
       }
 
       hex.position.copyFrom(currVector);
