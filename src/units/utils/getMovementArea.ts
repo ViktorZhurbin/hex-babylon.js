@@ -1,5 +1,5 @@
-import { getIsEvenRow } from "../../map/utils/getIsEvenRow";
 import { HexId, THexIdArray } from "../../map/utils/hexId";
+import { state$ } from "../../state/state";
 
 const getAvailablePositions = (positionIndex: number, speed: number) => {
   const positions = [];
@@ -18,20 +18,28 @@ const getAvailablePositions = (positionIndex: number, speed: number) => {
 export const getMoveArea = (coords: THexIdArray, speed: number) => {
   const [row, col] = coords;
   const rows = getAvailablePositions(row, speed);
-  // const middleRow = Grid.SideLength;
+  const Grid = state$.grid.get();
+  const middleRowIndex = Grid.SideLength - 1;
 
   return rows.flatMap((rowIndex) => {
-    const isSelectedRow = row === rowIndex;
     let cols = getAvailablePositions(col, speed);
+    console.log({ cols, middleRowIndex, row, rowIndex });
 
-    if (!isSelectedRow) {
-      // hex has only two adjusting hexes above and below it
-      // even rows are shifted right, so we slice the last element
-      // for odd rows we need to slice the first element
-      const isEven = getIsEvenRow(rowIndex);
-      cols = isEven ? cols.slice(0, cols.length - 1) : cols.slice(1);
+    if (row < middleRowIndex) {
+      if (row > rowIndex) {
+        cols = cols.slice(0, cols.length - 1);
+      } else if (row < rowIndex) {
+        cols = cols.slice(1);
+      }
+    } else if (row === middleRowIndex && row !== rowIndex) {
+      cols = cols.slice(0, cols.length - 1);
+    } else if (row > middleRowIndex) {
+      if (row > rowIndex) {
+        cols = cols.slice(1);
+      } else if (row < rowIndex) {
+        cols = cols.slice(0, cols.length - 1);
+      }
     }
-
     return cols.map((colIndex) => HexId.fromArray([rowIndex, colIndex]));
   });
 };

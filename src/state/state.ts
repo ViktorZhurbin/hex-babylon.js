@@ -7,6 +7,10 @@ import { TUnitInstance } from "../types/unit";
 import { setMoveArea } from "./observe";
 
 export type State = {
+  grid: {
+    RowsCount: number;
+    SideLength: number;
+  };
   moveArea: THexId[];
   scene: Scene | null;
   selectedHex: THex | null;
@@ -15,6 +19,10 @@ export type State = {
 };
 
 export const state$ = observable<State>({
+  grid: {
+    RowsCount: 0,
+    SideLength: 0,
+  },
   moveArea: [],
   scene: null,
   selectedHex: null,

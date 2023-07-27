@@ -1,5 +1,6 @@
 import { Scene, Vector3 } from "@babylonjs/core";
 
+import { state$ } from "../../state/state";
 import { addDebugValuesToHex } from "../hex/addDebugValuesToHex";
 import { Hex } from "../hex/constants";
 import { createHexTile } from "../hex/createHexTile";
@@ -24,6 +25,8 @@ export const createHexGrid = (tribesCount: number, scene: Scene) => {
   const hexTileBase = createHexTile(scene);
 
   const Grid = getGrid(tribesCount);
+  state$.grid.set(Grid);
+
   const middleRow = Grid.SideLength;
   // eslint-disable-next-line prefer-const
   let currVector = getGridStart(Grid);
