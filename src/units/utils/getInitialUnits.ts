@@ -1,5 +1,5 @@
 import { TTribes } from "../../constants/tribe";
-import { State } from "../../state";
+import { State } from "../../state/state";
 import { getTribeUnits } from "./getTribeUnits";
 
 export const getInitialUnits = (tribes: TTribes[]): State["units"] =>

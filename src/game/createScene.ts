@@ -2,7 +2,7 @@ import { Engine, Scene } from "@babylonjs/core";
 
 import { Tribes } from "../constants/tribe";
 import { createHexGrid } from "../map/hexGrid/createHexGrid";
-import { state$ } from "../state";
+import { state$ } from "../state/state";
 import { createInitialUnits } from "../units/createInitialUnits";
 import { initCamera } from "./initCamera";
 import { initControls } from "./initControls";

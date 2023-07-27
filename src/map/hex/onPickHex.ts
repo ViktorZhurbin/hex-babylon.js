@@ -1,6 +1,6 @@
 import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
 
-import { state$ } from "../../state";
+import { state$ } from "../../state/state";
 import { HexWithUnitId, THex } from "../../types/map";
 import { Unit } from "../../units/constants";
 import { getMoveArea } from "../../units/utils/getMovementArea";
@@ -30,7 +30,7 @@ const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
 };
 
 const handleCleanUp = (highlight: HighlightLayer) => {
-  state$.moveArea.set({});
+  state$.setMoveArea([]);
   state$.selectedHex.set(null);
   highlight.removeAllMeshes();
 };
@@ -88,15 +88,12 @@ export const onPickHex = (
       const units = state$.units.get();
       const unit = units[nextHexUnitId];
       const moveArea = getMoveArea(coords, unit.speed);
-      state$.moveArea.set(moveArea);
-
-      // console.log(moveArea);
+      state$.setMoveArea(moveArea);
     }
   } else {
-    state$.moveArea.set({});
+    state$.setMoveArea([]);
   }
 
   highlight.removeAllMeshes();
   highlight.addMesh(nextHexMesh, Color3.Green());
-  // state$.moveArea.set({});
 };

@@ -1,12 +1,8 @@
-import {
-  CreateCylinder,
-  Scene,
-  StandardMaterial,
-  Tools,
-} from "@babylonjs/core";
+import { CreateCylinder, Scene, Tools } from "@babylonjs/core";
 
 import { Hex } from "./constants";
 import { Colors3 } from "./constants/colors";
+import { createStandardColoredMaterial } from "./utils/colorHex";
 
 export const createHexTile = (scene: Scene) => {
   const hexTile = CreateCylinder(
@@ -21,10 +17,7 @@ export const createHexTile = (scene: Scene) => {
 
   hexTile.rotation.y = Tools.ToRadians(Hex.Rotation);
 
-  const material = new StandardMaterial("material", scene);
-  const colorGreen = Colors3.default;
-  material.diffuseColor = colorGreen;
-  material.specularColor = colorGreen;
+  const material = createStandardColoredMaterial(Colors3.default, scene);
   hexTile.material = material;
 
   return hexTile;

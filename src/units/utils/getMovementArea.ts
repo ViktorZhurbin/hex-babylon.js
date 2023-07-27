@@ -1,5 +1,5 @@
 import { getIsEvenRow } from "../../map/utils/getIsEvenRow";
-import { THexIdArray } from "../../map/utils/hexId";
+import { HexId, THexIdArray } from "../../map/utils/hexId";
 
 const getAvailablePositions = (positionIndex: number, speed: number) => {
   const positions = [];
@@ -20,7 +20,7 @@ export const getMoveArea = (coords: THexIdArray, speed: number) => {
   const rows = getAvailablePositions(row, speed);
   // const middleRow = Grid.SideLength;
 
-  return rows.reduce<Record<string, number[]>>((acc, rowIndex) => {
+  return rows.flatMap((rowIndex) => {
     const isSelectedRow = row === rowIndex;
     let cols = getAvailablePositions(col, speed);
 
@@ -32,8 +32,6 @@ export const getMoveArea = (coords: THexIdArray, speed: number) => {
       cols = isEven ? cols.slice(0, cols.length - 1) : cols.slice(1);
     }
 
-    acc[rowIndex] = cols;
-
-    return acc;
-  }, {});
+    return cols.map((colIndex) => HexId.fromArray([rowIndex, colIndex]));
+  });
 };
