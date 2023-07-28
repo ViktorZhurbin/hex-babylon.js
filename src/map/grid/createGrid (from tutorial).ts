@@ -6,6 +6,9 @@ import {
   Vector3,
 } from "@babylonjs/core";
 
+// Initially copied from: https://youtu.be/xOw31J8JFqA?t=76
+// Reference: https://www.redblobgames.com/grids/hexagons/
+
 //The math and properties for creating the hex grid.
 const gridSize = 2;
 const hexLength = 1;
