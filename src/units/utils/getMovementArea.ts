@@ -1,10 +1,10 @@
 import { state$ } from "../../state/state";
 import { HexId } from "../../utils/hexId";
 
-const getAvailablePositions = (positionIndex: number, speed: number) => {
+const getAvailableRows = (rowIndex: number, speed: number) => {
   const positions = [];
-  const min = positionIndex - speed;
-  const max = positionIndex + speed;
+  const min = rowIndex - speed;
+  const max = rowIndex + speed;
 
   for (let i = min; i <= max; i++) {
     if (i >= 0) {
@@ -15,31 +15,85 @@ const getAvailablePositions = (positionIndex: number, speed: number) => {
   return positions;
 };
 
+const getAvailableColumns = (options: {
+  middleRowIndex: number;
+  rowIndex: number;
+  rows: number[];
+  selectedCol: number;
+  selectedRow: number;
+  speed: number;
+}) => {
+  const { middleRowIndex, rowIndex, selectedCol, selectedRow, speed } = options;
+
+  const cols = getAvailableRows(selectedCol, speed);
+  const shrinkCount = Math.abs(selectedRow - rowIndex);
+
+  // if (!shrinkCount) {
+  //   return cols;
+  // }
+
+  const isUnitAboveMid = selectedRow < middleRowIndex;
+  const isUnitOnMid = selectedRow === middleRowIndex;
+  const isUnitBelowMid = selectedRow > middleRowIndex;
+
+  const shrinkEnd = cols.slice(0, cols.length - shrinkCount);
+  let shrinkStart = cols.slice(shrinkCount);
+
+  if (isUnitAboveMid && rowIndex > middleRowIndex) {
+    const shrinkEndCount = Math.abs(middleRowIndex - rowIndex);
+    shrinkStart = cols.slice(1, cols.length - shrinkEndCount);
+  }
+
+  if (isUnitBelowMid && rowIndex < middleRowIndex) {
+    const shrinkStartCount = Math.abs(rowIndex - middleRowIndex);
+    shrinkStart = cols.slice(
+      shrinkStartCount - 1,
+      cols.length - shrinkStartCount,
+    );
+    console.log(
+      { isUnitBelowMid, rowIndex, shrinkEndCount: shrinkStartCount },
+      cols,
+      shrinkStart,
+    );
+  }
+
+  if (isUnitAboveMid) {
+    if (rowIndex < selectedRow) {
+      return shrinkEnd;
+    } else if (rowIndex > selectedRow) {
+      return shrinkStart;
+    }
+  } else if (isUnitOnMid) {
+    if (rowIndex !== selectedRow) {
+      return shrinkEnd;
+    }
+  } else if (isUnitBelowMid) {
+    if (rowIndex < selectedRow) {
+      return shrinkStart;
+    } else if (rowIndex > selectedRow) {
+      return shrinkEnd;
+    }
+  }
+
+  return cols;
+};
+
 export const getMoveArea = (coords: number[], speed: number) => {
   const [row, col] = coords;
-  const rows = getAvailablePositions(row, speed);
+  const rows = getAvailableRows(row, speed);
   const Grid = state$.grid.get();
   const middleRowIndex = Grid.SideLength - 1;
 
   return rows.flatMap((rowIndex) => {
-    let cols = getAvailablePositions(col, speed);
-    console.log({ cols, middleRowIndex, row, rowIndex });
+    const cols = getAvailableColumns({
+      middleRowIndex,
+      rowIndex,
+      rows,
+      selectedCol: col,
+      selectedRow: row,
+      speed,
+    });
 
-    if (row < middleRowIndex) {
-      if (row > rowIndex) {
-        cols = cols.slice(0, cols.length - 1);
-      } else if (row < rowIndex) {
-        cols = cols.slice(1);
-      }
-    } else if (row === middleRowIndex && row !== rowIndex) {
-      cols = cols.slice(0, cols.length - 1);
-    } else if (row > middleRowIndex) {
-      if (row > rowIndex) {
-        cols = cols.slice(1);
-      } else if (row < rowIndex) {
-        cols = cols.slice(0, cols.length - 1);
-      }
-    }
     return cols.map((colIndex) => HexId.fromArray([rowIndex, colIndex]));
   });
 };
