@@ -24,11 +24,6 @@ export const getGrid = (tribesCount: number) => {
     for (let colIndex = 0; colIndex < lastCol; colIndex++) {
       const label = HexId.fromArray([rowIndex, colIndex]);
 
-      const isGrowing = rowIndex < middleRow - 1;
-      const modifier = isGrowing ? 1 : -1;
-
-      lastCol += modifier;
-
       const tile: TGridTile = {
         colIndex,
         label,
@@ -41,6 +36,10 @@ export const getGrid = (tribesCount: number) => {
         array[rowIndex][colIndex] = tile;
       }
     }
+
+    const isGrowing = rowIndex < middleRow - 1;
+
+    lastCol += isGrowing ? 1 : -1;
   }
 
   return {
