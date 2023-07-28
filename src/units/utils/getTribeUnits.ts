@@ -6,7 +6,7 @@ import { TUnitInstance } from "../../types/unit";
 import { START_UNITS_BY_TRIBE } from "../constants";
 
 export const getTribeUnits = (tribe: TTribes) => {
-  return START_UNITS_BY_TRIBE[tribe].reduce<Record<string, TUnitInstance>>(
+  return START_UNITS_BY_TRIBE[tribe]?.reduce<Record<string, TUnitInstance>>(
     (acc, type) => {
       const id = Tools.RandomId();
 
