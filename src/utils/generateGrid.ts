@@ -8,8 +8,11 @@ export type TGridTile = {
   rowIndex: number;
 };
 
+export const getGridSide = (tribesCount: number) =>
+  tribesCount * SIDE_LENGTH_PER_TRIBE;
+
 export const generateGrid = (tribesCount: number) => {
-  const GRID_SIDE = tribesCount * SIDE_LENGTH_PER_TRIBE;
+  const GRID_SIDE = getGridSide(tribesCount);
   const rowsCount = GRID_SIDE * 2 - 1;
   const sideLength = GRID_SIDE;
   const middleRow = sideLength;

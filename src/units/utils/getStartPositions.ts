@@ -1,5 +1,6 @@
 import { SIDE_LENGTH_PER_TRIBE } from "../../constants/grid";
 import { TTribes } from "../../constants/tribe";
+import { getGridSide } from "../../utils/generateGrid";
 import { getInitialUnits } from "./getInitialUnits";
 
 const getStartPositions = (tribesCount: number) => {
@@ -7,7 +8,7 @@ const getStartPositions = (tribesCount: number) => {
 
   for (let index = 0; index < tribesCount - 1; index++) {
     const [prevRow, prevCol] = positions[index];
-    const gridSide = tribesCount * SIDE_LENGTH_PER_TRIBE;
+    const gridSide = getGridSide(tribesCount);
 
     const row = prevRow + gridSide;
     const col = prevCol + SIDE_LENGTH_PER_TRIBE;
@@ -23,7 +24,7 @@ export const getStartUnitPositions = (
   units: ReturnType<typeof getInitialUnits>,
 ) => {
   const startPositions = getStartPositions(tribes.length);
-  const middleRow = tribes.length * SIDE_LENGTH_PER_TRIBE;
+  const middleRow = getGridSide(tribes.length);
 
   return tribes.reduce<{ col: number; row: number; unitId: string }[]>(
     (acc, tribe, index) => {
