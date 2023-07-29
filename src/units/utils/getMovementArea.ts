@@ -81,8 +81,7 @@ const getAvailableColumns = (options: {
 export const getMoveArea = (coords: number[], speed: number) => {
   const [row, col] = coords;
   const rows = getAvailableRows(row, speed);
-  const grid = state$.grid.get();
-  const middleRowIndex = grid.sideLength - 1;
+  const { middleRowIndex } = state$.grid.get();
 
   return rows.flatMap((rowIndex) => {
     const cols = getAvailableColumns({
