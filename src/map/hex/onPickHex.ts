@@ -1,11 +1,11 @@
 import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
 
+import { Hex } from "../../constants/hex";
 import { state$ } from "../../state/state";
 import { HexWithUnitId, THex } from "../../types/map";
 import { Unit } from "../../units/constants";
 import { getMoveArea } from "../../units/utils/getMovementArea";
 import { HexId } from "../../utils/hexId";
-import { Hex } from "../constants/hex";
 
 const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
   const scene = state$.scene.get();

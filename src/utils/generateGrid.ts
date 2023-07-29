@@ -1,6 +1,6 @@
+import { SIDE_LENGTH_PER_TRIBE } from "../constants/grid";
+import { state$ } from "../state/state";
 import { HexId } from "./hexId";
-
-export const SIDE_LENGTH_PER_TRIBE = 3;
 
 export type TGridTile = {
   colIndex: number;
@@ -8,7 +8,7 @@ export type TGridTile = {
   rowIndex: number;
 };
 
-export const getGrid = (tribesCount: number) => {
+export const generateGrid = (tribesCount: number) => {
   const GRID_SIDE = tribesCount * SIDE_LENGTH_PER_TRIBE;
   const rowsCount = GRID_SIDE * 2 - 1;
   const sideLength = GRID_SIDE;
@@ -42,9 +42,14 @@ export const getGrid = (tribesCount: number) => {
     lastCol += isGrowing ? 1 : -1;
   }
 
-  return {
+  const grid = {
     array,
+    middleRowIndex: sideLength - 1,
     rowsCount,
     sideLength,
   };
+
+  state$.grid.set(grid);
+
+  return grid;
 };

@@ -1,7 +1,7 @@
 import { CreateCylinder, Scene, Tools } from "@babylonjs/core";
 
+import { Hex } from "../../constants/hex";
 import { createHexMaterial } from "../../utils/createHexMaterial";
-import { Hex } from "../constants/hex";
 
 export const createHex = (scene: Scene) => {
   const hexTile = CreateCylinder(

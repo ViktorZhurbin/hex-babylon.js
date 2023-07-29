@@ -1,7 +1,7 @@
 import { DynamicTexture, Scene } from "@babylonjs/core";
 
+import { Hex } from "../constants/hex";
 import { Colors } from "../map/constants/colors";
-import { Hex } from "../map/constants/hex";
 
 export const createDynamicTexture = (options: {
   bgColor: string;

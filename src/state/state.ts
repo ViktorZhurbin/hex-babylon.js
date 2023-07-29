@@ -3,11 +3,11 @@ import { observable } from "@legendapp/state";
 
 import { THex } from "../types/map";
 import { TUnitInstance } from "../types/unit";
-import { getGrid } from "../utils/grid";
+import { generateGrid } from "../utils/generateGrid";
 import { setMoveArea } from "./setMoveArea";
 
 export type State = {
-  grid: ReturnType<typeof getGrid>;
+  grid: ReturnType<typeof generateGrid>;
   moveArea: string[];
   scene: Scene | null;
   selectedHex: THex | null;
@@ -18,6 +18,7 @@ export type State = {
 export const state$ = observable<State>({
   grid: {
     array: [],
+    middleRowIndex: 0,
     rowsCount: 0,
     sideLength: 0,
   },

@@ -1,5 +1,5 @@
+import { SIDE_LENGTH_PER_TRIBE } from "../../constants/grid";
 import { TTribes } from "../../constants/tribe";
-import { SIDE_LENGTH_PER_TRIBE } from "../../utils/grid";
 import { getInitialUnits } from "./getInitialUnits";
 
 const getStartPositions = (tribesCount: number) => {

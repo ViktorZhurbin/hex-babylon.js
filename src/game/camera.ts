@@ -1,6 +1,7 @@
-import { ArcRotateCamera, Scene, Tools, Vector3 } from "@babylonjs/core";
+import { ArcRotateCamera, Scene, Tools } from "@babylonjs/core";
 
-import { SIDE_LENGTH_PER_TRIBE } from "../utils/grid";
+import { SIDE_LENGTH_PER_TRIBE } from "../constants/grid";
+import { getGridCenter } from "../state/getGridCenter";
 
 export const initCamera = (scene: Scene, canvas: HTMLCanvasElement) => {
   const camera = new ArcRotateCamera(
@@ -8,7 +9,7 @@ export const initCamera = (scene: Scene, canvas: HTMLCanvasElement) => {
     Tools.ToRadians(90),
     Tools.ToRadians(45),
     10,
-    Vector3.Zero(),
+    getGridCenter(),
     scene,
   );
 
