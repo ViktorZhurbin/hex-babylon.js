@@ -28,9 +28,9 @@ export const getStartUnitPositions = (
 
   return tribes.reduce<{ col: number; row: number; unitId: string }[]>(
     (acc, tribe, index) => {
-      const tribeUnitIds = Object.values(units).flatMap((unit) =>
-        unit.tribe === tribe ? unit.id : [],
-      );
+      const tribeUnitIds = Object.values(units)
+        .filter((unit) => unit.tribe === tribe)
+        .map((unit) => unit.id);
 
       const [startRow, startCol] = startPositions[index];
 
