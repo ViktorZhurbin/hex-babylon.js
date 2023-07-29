@@ -5,6 +5,7 @@ import { state$ } from "../../state/state";
 import { HexWithUnitId, THex } from "../../types/map";
 import { Unit } from "../../units/constants";
 import { getMoveArea } from "../../units/utils/getMovementArea";
+import { moveUnit } from "../../units/utils/moveUnit";
 import { HexId } from "../../utils/hexId";
 
 const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
@@ -17,16 +18,10 @@ const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
 
   const prevHexMesh = scene.getMeshById(prevHex.id);
   const nextHexMesh = scene.getMeshById(nextHexId);
-
   const unitMesh = scene.getMeshById(prevHex.unitId);
 
   if (prevHexMesh && nextHexMesh && unitMesh) {
-    unitMesh.position.x = nextHexMesh.position.x;
-    unitMesh.position.z = nextHexMesh.position.z;
-    unitMesh.metadata.hex = nextHexMesh;
-
-    nextHexMesh.metadata.unitId = unitMesh.id;
-    prevHexMesh.metadata.unitId = null;
+    moveUnit(unitMesh, nextHexMesh, prevHexMesh);
   }
 };
 

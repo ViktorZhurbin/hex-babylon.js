@@ -7,11 +7,13 @@ import { HexId } from "../utils/hexId";
 import { createUnit } from "./createUnit";
 import { getInitialUnits } from "./utils/getInitialUnits";
 import { getStartUnitPositions } from "./utils/getStartPositions";
+import { moveUnit } from "./utils/moveUnit";
 
 export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
   const units = getInitialUnits(tribes);
-  state$.units.set(units);
   const startPositions = getStartUnitPositions(tribes, units);
+
+  state$.units.set(units);
 
   startPositions.forEach(({ col, row, unitId }) => {
     const unit = createUnit(scene);
@@ -30,10 +32,7 @@ export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
     const hex = scene.getMeshById(hexId);
 
     if (hex) {
-      unit.position.x = hex.position.x;
-      unit.position.z = hex.position.z;
-      unit.metadata = { hex };
-      hex.metadata = { unitId };
+      moveUnit(unit, hex);
     }
   });
 };
