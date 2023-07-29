@@ -9,11 +9,11 @@ type TUnitTypes = keyof typeof UnitTypes;
 
 const Units: Record<TUnitTypes, TUnit> = {
   [UnitTypes.typeOne]: {
-    speed: 1,
+    speed: 3,
     type: UnitTypes.typeOne,
   },
   [UnitTypes.typeTwo]: {
-    speed: 1,
+    speed: 3,
     type: UnitTypes.typeTwo,
   },
 };
