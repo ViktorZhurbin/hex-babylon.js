@@ -9,7 +9,6 @@ import { HexId } from "../../utils/hexId";
 
 const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
   const scene = state$.scene.get();
-  const selectedHex = state$.selectedHex.get();
   const moveArea = state$.moveArea.get();
 
   if (!moveArea.includes(nextHexId)) {
@@ -26,7 +25,7 @@ const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
     unitMesh.position.z = nextHexMesh.position.z;
     unitMesh.metadata.hex = nextHexMesh;
 
-    nextHexMesh.metadata.unitId = selectedHex.unitId;
+    nextHexMesh.metadata.unitId = unitMesh.id;
     prevHexMesh.metadata.unitId = null;
   }
 };
