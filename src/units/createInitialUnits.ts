@@ -20,7 +20,7 @@ export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
   const traverser = ring({ center: [0, 0], start: [gridSide - 1, 0] });
   const ringOfHexes = grid.traverse(traverser);
 
-  const units = Object.values(unitsByTribe);
+  const units = [...unitsByTribe];
   ringOfHexes.toArray().forEach((hex, hexIndex) => {
     if (!units.length) {
       return;

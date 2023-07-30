@@ -8,7 +8,7 @@ import { START_UNITS_BY_TRIBE } from "../constants";
 export const getInitialUnits = (tribes: TTribes[]) => {
   return tribes.reduce<{
     allUnits: Record<string, TUnitInstance>;
-    unitsByTribe: Record<string, TUnitInstance[]>;
+    unitsByTribe: TUnitInstance[][];
   }>(
     (acc, tribe) => {
       const tribeUnitTypes = START_UNITS_BY_TRIBE[tribe];
@@ -25,10 +25,10 @@ export const getInitialUnits = (tribes: TTribes[]) => {
         return unit;
       });
 
-      acc.unitsByTribe[tribe] = tribeUnits;
+      acc.unitsByTribe.push(tribeUnits);
 
       return acc;
     },
-    { allUnits: {}, unitsByTribe: {} },
+    { allUnits: {}, unitsByTribe: [] },
   );
 };
