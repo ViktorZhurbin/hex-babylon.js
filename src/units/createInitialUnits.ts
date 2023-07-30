@@ -20,36 +20,35 @@ export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
   const traverser = ring({ center: [0, 0], start: [gridSide - 1, 0] });
   const ringOfHexes = grid.traverse(traverser);
 
-  let counter = 0;
-  Object.values(unitsByTribe).forEach((tribeUnits) => {
-    ringOfHexes.toArray().forEach((hex, hexIndex) => {
-      if (counter >= tribes.length) {
-        return;
-      }
+  const units = Object.values(unitsByTribe);
+  ringOfHexes.toArray().forEach((hex, hexIndex) => {
+    if (!units.length) {
+      return;
+    }
 
-      if (hexIndex % gridSide === 0) {
-        counter++;
-        tribeUnits.forEach((unit, unitIndex) => {
-          const unitMesh = createUnit(scene);
-          // console.log(hex);
-          // if (import.meta.env.DEV) {
-          //   addLabelToMesh({
-          //     bgColor: "#fff",
-          //     mesh: unit,
-          //     scene,
-          //     text: units[unitId].type,
-          //   });
-          // }
+    if (hexIndex % gridSide === 0) {
+      const tribeUnits = units.pop();
 
-          unitMesh.id = unit.id;
-          const hexId = HexId.fromArray([hex.r, hex.q + unitIndex]);
-          const hexMesh = scene.getMeshById(hexId);
+      tribeUnits?.forEach((unit, unitIndex) => {
+        const unitMesh = createUnit(scene);
+        // console.log(hex);
+        // if (import.meta.env.DEV) {
+        //   addLabelToMesh({
+        //     bgColor: "#fff",
+        //     mesh: unit,
+        //     scene,
+        //     text: units[unitId].type,
+        //   });
+        // }
 
-          if (hexMesh) {
-            moveUnit(unitMesh, hexMesh);
-          }
-        });
-      }
-    });
+        unitMesh.id = unit.id;
+        const hexId = HexId.fromArray([hex.r, hex.q + unitIndex]);
+        const hexMesh = scene.getMeshById(hexId);
+
+        if (hexMesh) {
+          moveUnit(unitMesh, hexMesh);
+        }
+      });
+    }
   });
 };
