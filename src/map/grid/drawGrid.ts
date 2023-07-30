@@ -16,7 +16,7 @@ export const drawGrid = (scene: Scene) => {
 
       hex.id = label;
       hex.name = Hex.Name;
-      hex.metadata = { unitId: null };
+      hex.metadata = { colIndex, rowIndex, unitId: null };
       hex.position = getHexPositionByIndex(rowIndex, colIndex);
 
       if (import.meta.env.DEV) {

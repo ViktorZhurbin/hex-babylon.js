@@ -50,11 +50,6 @@ const getAvailableColumns = (options: {
       shrinkStartCount - 1,
       cols.length - shrinkStartCount,
     );
-    console.log(
-      { isUnitBelowMid, rowIndex, shrinkEndCount: shrinkStartCount },
-      cols,
-      shrinkStart,
-    );
   }
 
   if (isUnitAboveMid) {
