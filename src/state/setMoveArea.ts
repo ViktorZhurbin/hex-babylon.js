@@ -1,6 +1,6 @@
-import { HexColors3 } from "../map/constants/colors";
-import { createHexMaterial } from "../utils/createHexMaterial";
-import { HexId } from "../utils/hexId";
+import { HexColors3 } from "../constants/colors";
+import { HexId } from "../utils/hex/hexId";
+import { createHexMaterial } from "../utils/mesh/createHexMaterial";
 import { State, state$ } from "./state";
 
 export const setMoveArea: State["setMoveArea"] = (moveArea) => {

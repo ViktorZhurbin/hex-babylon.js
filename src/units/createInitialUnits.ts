@@ -3,8 +3,8 @@ import { ring } from "honeycomb-grid";
 
 import { TTribes } from "../constants/tribe";
 import { state$ } from "../state/state";
-import { getGridSide } from "../utils/getGridSide";
-import { HexId } from "../utils/hexId";
+import { HexId } from "../utils/hex/hexId";
+import { getGridSide } from "../utils/map/getGridSide";
 import { createUnit } from "./createUnit";
 import { getInitialUnits } from "./utils/getInitialUnits";
 import { moveUnit } from "./utils/moveUnit";

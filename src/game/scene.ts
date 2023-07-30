@@ -1,11 +1,11 @@
 import { Engine, Scene } from "@babylonjs/core";
 
 import { Tribes } from "../constants/tribe";
+import { createGrid } from "../map/createGrid";
 import { state$ } from "../state/state";
 import { createInitialUnits } from "../units/createInitialUnits";
 import { initCamera } from "./camera";
 import { initControls } from "./controls";
-import { createGrid } from "./createGrid";
 import { initLight } from "./llight";
 
 export const createScene = async function (

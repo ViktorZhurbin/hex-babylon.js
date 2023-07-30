@@ -1,6 +1,6 @@
 import { Mesh, Scene, StandardMaterial } from "@babylonjs/core";
 
-import { Colors } from "../map/constants/colors";
+import { Colors } from "../../constants/colors";
 import { createDynamicTexture } from "./createDynamicTexture";
 
 export const addLabelToMesh = (options: {

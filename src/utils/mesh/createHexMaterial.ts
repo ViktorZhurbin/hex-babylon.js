@@ -1,6 +1,6 @@
 import { Color3, Scene } from "@babylonjs/core";
 
-import { HexColors3, HexColorsMap } from "../map/constants/colors";
+import { HexColors3, HexColorsMap } from "../../constants/colors";
 import { createDynamicTexture } from "./createDynamicTexture";
 import { createStandardColoredMaterial } from "./createStandardColoredMaterial";
 
