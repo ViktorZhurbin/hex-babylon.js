@@ -23,7 +23,7 @@ export const createUnit = (scene: Scene) => {
   unit.material = baseUnitMaterial;
 
   // place on top of the tiles
-  unit.position.y = 0.6;
+  // unit.position.y = 0.6;
 
   return unit;
 };

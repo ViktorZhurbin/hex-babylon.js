@@ -1,6 +1,6 @@
-import { DynamicTexture, Scene } from "@babylonjs/core";
+import { DynamicTexture, Scene, Tools } from "@babylonjs/core";
 
-import { Hex } from "../constants/hex";
+import { HexParams } from "../constants/hex";
 import { Colors } from "../map/constants/colors";
 
 export const createDynamicTexture = (options: {
@@ -14,7 +14,7 @@ export const createDynamicTexture = (options: {
     bgColor,
     fontColor = Colors.grey400,
     scene,
-    size = Hex.Height * 50,
+    size = HexParams.Height * 50,
     text,
   } = options;
 
@@ -25,6 +25,7 @@ export const createDynamicTexture = (options: {
     false,
   );
 
+  dynamicTexture.wAng = Tools.ToRadians(-90);
   dynamicTexture.drawText(text, null, null, `12px`, fontColor, bgColor);
 
   return dynamicTexture;

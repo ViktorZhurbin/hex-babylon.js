@@ -1,14 +1,14 @@
 import { Scene } from "@babylonjs/core";
 import { observable } from "@legendapp/state";
+import { Grid, Hex } from "honeycomb-grid";
 
 import { THex } from "../types/map";
 import { TUnitInstance } from "../types/unit";
-import { generateGrid } from "../utils/generateGrid";
 import { setMoveArea } from "./setMoveArea";
 
 export type State = {
-  grid: ReturnType<typeof generateGrid>;
-  moveArea: string[];
+  grid: Grid<Hex> | null;
+  moveArea: Grid<Hex> | null;
   scene: Scene | null;
   selectedHex: THex | null;
   setMoveArea: (moveArea: State["moveArea"]) => void;
@@ -16,13 +16,8 @@ export type State = {
 };
 
 export const state$ = observable<State>({
-  grid: {
-    array: [],
-    middleRowIndex: 0,
-    rowsCount: 0,
-    sideLength: 0,
-  },
-  moveArea: [],
+  grid: null,
+  moveArea: null,
   scene: null,
   selectedHex: null,
   setMoveArea,

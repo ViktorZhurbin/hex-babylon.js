@@ -1,18 +1,22 @@
 import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
+import { Hex } from "honeycomb-grid";
 
-import { Hex } from "../../constants/hex";
+import { HexParams } from "../../constants/hex";
 import { state$ } from "../../state/state";
 import { HexWithUnitId, THex } from "../../types/map";
 import { Unit } from "../../units/constants";
-import { getMoveArea } from "../../units/utils/getMovementArea";
+import { getMoveArea } from "../../units/utils/getMoveArea";
 import { moveUnit } from "../../units/utils/moveUnit";
-import { HexId } from "../../utils/hexId";
 
-const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
+const handleMoveUnit = (
+  prevHex: HexWithUnitId,
+  nextHex: Hex,
+  nextHexId: THex["id"],
+) => {
   const scene = state$.scene.get();
   const moveArea = state$.moveArea.get();
 
-  if (!moveArea.includes(nextHexId)) {
+  if (!moveArea.hasHex(nextHex)) {
     return;
   }
 
@@ -26,7 +30,7 @@ const handleMoveUnit = (prevHex: HexWithUnitId, nextHexId: THex["id"]) => {
 };
 
 const handleCleanUp = (highlight: HighlightLayer) => {
-  state$.setMoveArea([]);
+  state$.setMoveArea(null);
   state$.selectedHex.set(null);
   highlight.removeAllMeshes();
 };
@@ -39,7 +43,7 @@ export const onPickHex = (
     return;
   }
 
-  const isHex = pickedMesh.name === Hex.Name;
+  const isHex = pickedMesh.name === HexParams.Name;
   const isUnit = pickedMesh.name === Unit.BaseName;
 
   if (!isHex && !isUnit) {
@@ -62,6 +66,7 @@ export const onPickHex = (
   if (selectedHex?.unitId && !nextHexUnitId) {
     handleMoveUnit(
       { id: selectedHex.id, unitId: selectedHex.unitId },
+      nextHexMesh.metadata.hex,
       nextHexMesh.id,
     );
 
@@ -78,16 +83,12 @@ export const onPickHex = (
 
   // if tile has unit
   if (nextHexUnitId) {
-    const coords = HexId.toArray(nextHexMesh.id);
-
-    if (coords.length) {
-      const units = state$.units.get();
-      const unit = units[nextHexUnitId];
-      const moveArea = getMoveArea(coords, unit.speed);
-      state$.setMoveArea(moveArea);
-    }
+    const units = state$.units.get();
+    const unit = units[nextHexUnitId];
+    const moveArea = getMoveArea(nextHexMesh.metadata.hex, unit.speed);
+    state$.setMoveArea(moveArea);
   } else {
-    state$.setMoveArea([]);
+    state$.setMoveArea(null);
   }
 
   highlight.removeAllMeshes();

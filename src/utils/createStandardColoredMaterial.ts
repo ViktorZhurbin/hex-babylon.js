@@ -5,5 +5,9 @@ export const createStandardColoredMaterial = (color: Color3, scene?: Scene) => {
 
   material.specularColor = color;
 
+  if (!import.meta.env.DEV) {
+    material.diffuseColor = color;
+  }
+
   return material;
 };

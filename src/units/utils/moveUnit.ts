@@ -1,12 +1,15 @@
-import { AbstractMesh, Mesh } from "@babylonjs/core";
+import { AbstractMesh, Mesh, Vector3 } from "@babylonjs/core";
 
 export const moveUnit = (
   unit: AbstractMesh | Mesh,
   nextHex: AbstractMesh,
   prevHex?: AbstractMesh,
 ) => {
-  unit.position.x = nextHex.position.x;
-  unit.position.z = nextHex.position.z;
+  unit.position = new Vector3(
+    nextHex.metadata.hex.x,
+    0.5,
+    nextHex.metadata.hex.y,
+  );
 
   unit.metadata ??= {};
   unit.metadata.hex = nextHex;

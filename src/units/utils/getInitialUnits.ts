@@ -1,8 +1,34 @@
-import { TTribes } from "../../constants/tribe";
-import { State } from "../../state/state";
-import { getTribeUnits } from "./getTribeUnits";
+import { Tools } from "@babylonjs/core";
 
-export const getInitialUnits = (tribes: TTribes[]): State["units"] =>
-  tribes.reduce<ReturnType<typeof getTribeUnits>>((acc, tribe) => {
-    return { ...acc, ...getTribeUnits(tribe) };
-  }, {});
+import { TTribes } from "../../constants/tribe";
+import { Units } from "../../constants/unit";
+import { TUnitInstance } from "../../types/unit";
+import { START_UNITS_BY_TRIBE } from "../constants";
+
+export const getInitialUnits = (tribes: TTribes[]) => {
+  return tribes.reduce<{
+    allUnits: Record<string, TUnitInstance>;
+    unitsByTribe: Record<string, TUnitInstance[]>;
+  }>(
+    (acc, tribe) => {
+      const tribeUnitTypes = START_UNITS_BY_TRIBE[tribe];
+
+      const tribeUnits = tribeUnitTypes.map((unitType) => {
+        const unit = {
+          id: Tools.RandomId(),
+          tribe,
+          ...Units[unitType],
+        };
+
+        acc.allUnits[unit.id] = unit;
+
+        return unit;
+      });
+
+      acc.unitsByTribe[tribe] = tribeUnits;
+
+      return acc;
+    },
+    { allUnits: {}, unitsByTribe: {} },
+  );
+};

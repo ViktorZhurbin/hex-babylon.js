@@ -1,38 +1,55 @@
 import { Scene } from "@babylonjs/core";
+import { ring } from "honeycomb-grid";
 
 import { TTribes } from "../constants/tribe";
 import { state$ } from "../state/state";
-import { addLabelToMesh } from "../utils/addLabelToMesh";
+import { getGridSide } from "../utils/getGridSide";
 import { HexId } from "../utils/hexId";
 import { createUnit } from "./createUnit";
 import { getInitialUnits } from "./utils/getInitialUnits";
-import { getStartUnitPositions } from "./utils/getStartPositions";
 import { moveUnit } from "./utils/moveUnit";
 
 export const createInitialUnits = (tribes: TTribes[], scene: Scene) => {
-  const units = getInitialUnits(tribes);
-  const startPositions = getStartUnitPositions(tribes, units);
+  const { allUnits, unitsByTribe } = getInitialUnits(tribes);
 
-  state$.units.set(units);
+  state$.units.set(allUnits);
+  const grid = state$.grid.get();
 
-  startPositions.forEach(({ col, row, unitId }) => {
-    const unit = createUnit(scene);
+  const gridSide = getGridSide(tribes.length);
 
-    if (import.meta.env.DEV) {
-      addLabelToMesh({
-        bgColor: "#fff",
-        mesh: unit,
-        scene,
-        text: units[unitId].type,
-      });
-    }
+  const traverser = ring({ center: [0, 0], start: [gridSide - 1, 0] });
+  const ringOfHexes = grid.traverse(traverser);
 
-    unit.id = unitId;
-    const hexId = HexId.fromArray([row, col]);
-    const hex = scene.getMeshById(hexId);
+  let counter = 0;
+  Object.values(unitsByTribe).forEach((tribeUnits) => {
+    ringOfHexes.toArray().forEach((hex, hexIndex) => {
+      if (counter >= tribes.length) {
+        return;
+      }
 
-    if (hex) {
-      moveUnit(unit, hex);
-    }
+      if (hexIndex % gridSide === 0) {
+        counter++;
+        tribeUnits.forEach((unit, unitIndex) => {
+          const unitMesh = createUnit(scene);
+          // console.log(hex);
+          // if (import.meta.env.DEV) {
+          //   addLabelToMesh({
+          //     bgColor: "#fff",
+          //     mesh: unit,
+          //     scene,
+          //     text: units[unitId].type,
+          //   });
+          // }
+
+          unitMesh.id = unit.id;
+          const hexId = HexId.fromArray([hex.r, hex.q + unitIndex]);
+          const hexMesh = scene.getMeshById(hexId);
+
+          if (hexMesh) {
+            moveUnit(unitMesh, hexMesh);
+          }
+        });
+      }
+    });
   });
 };
