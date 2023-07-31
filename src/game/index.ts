@@ -1,6 +1,5 @@
 import { Engine } from "@babylonjs/core";
 
-import { initDebugLayer } from "./debugLayer";
 import { createScene } from "./scene";
 
 export const initGame = async (canvas: HTMLCanvasElement) => {
@@ -13,7 +12,9 @@ export const initGame = async (canvas: HTMLCanvasElement) => {
 
   const scene = await createScene(engine, canvas);
 
-  initDebugLayer(scene);
+  if (import.meta.env.DEV) {
+    import("./debugLayer").then((module) => module.initDebugLayer(scene));
+  }
 
   engine.runRenderLoop(() => {
     scene.render();
