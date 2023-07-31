@@ -17,6 +17,14 @@
     "*.{js,ts,css,md,yml,json,html}": "npm run prettier"
   },
   "prettier": {},
+  "dependencies": {
+    "@babylonjs/core": "^6.13.0",
+    "@babylonjs/loaders": "^6.13.0",
+    "@legendapp/state": "^1.6.3",
+    "earcut": "^2.2.4",
+    "honeycomb-grid": "^4.1.4",
+    "typescript": "^5.0.2"
+  },
   "devDependencies": {
     "@babylonjs/inspector": "^6.13.0",
     "@types/earcut": "^2.1.1",
@@ -29,13 +37,5 @@
     "prettier": "^3.0.0",
     "vite": "^4.4.5",
     "vite-plugin-checker": "^0.6.1"
-  },
-  "dependencies": {
-    "@babylonjs/core": "^6.13.0",
-    "@babylonjs/loaders": "^6.13.0",
-    "@legendapp/state": "^1.6.3",
-    "earcut": "^2.2.4",
-    "honeycomb-grid": "^4.1.4",
-    "typescript": "^5.0.2"
   }
 }
