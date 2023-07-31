@@ -1,10 +1,8 @@
-import {
-  Color4,
-  CreatePolygon,
-  Scene,
-  StandardMaterial,
-  Vector3,
-} from "@babylonjs/core";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { Color4 } from "@babylonjs/core/Maths/math.color";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { CreatePolygon } from "@babylonjs/core/Meshes/Builders/polygonBuilder";
+import { Scene } from "@babylonjs/core/scene";
 import earcut from "earcut";
 import { Hex } from "honeycomb-grid";
 

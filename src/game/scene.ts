@@ -1,4 +1,5 @@
-import { Engine, Scene } from "@babylonjs/core";
+import { Engine } from "@babylonjs/core/Engines/engine";
+import { Scene } from "@babylonjs/core/scene";
 
 import { Tribes } from "../constants/tribe";
 import { createGrid } from "../map/createGrid";
@@ -18,13 +19,14 @@ export const createScene = async function (
 
   initCamera(scene, canvas);
   initLight(scene);
-  initControls(scene);
 
   createGrid(tribes.length, scene);
 
   createInitialUnits(tribes, scene);
 
   state$.scene.set(scene);
+
+  initControls(scene);
 
   return scene;
 };

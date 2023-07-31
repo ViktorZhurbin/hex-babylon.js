@@ -1,4 +1,6 @@
-import { Mesh, Scene, StandardMaterial } from "@babylonjs/core";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { Scene } from "@babylonjs/core/scene";
 
 import { Colors } from "../../constants/colors";
 import { createDynamicTexture } from "./createDynamicTexture";

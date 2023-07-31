@@ -1,4 +1,4 @@
-import { Scene } from "@babylonjs/core";
+import { Scene } from "@babylonjs/core/scene";
 import { Grid, Orientation, defineHex, spiral } from "honeycomb-grid";
 
 import { state$ } from "../state/state";
