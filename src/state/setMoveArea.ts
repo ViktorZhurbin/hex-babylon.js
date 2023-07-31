@@ -20,6 +20,7 @@ export const setMoveArea: State["setMoveArea"] = (moveArea) => {
     }
   });
 
+  console.log(moveArea);
   moveArea?.forEach((hex) => {
     const hexId = HexId.fromArray([hex.r, hex.q]);
     const hexMesh = scene.getMeshById(hexId);
@@ -30,6 +31,7 @@ export const setMoveArea: State["setMoveArea"] = (moveArea) => {
     });
 
     if (hexMesh) {
+      console.log(highlightedMaterial);
       hexMesh.material = highlightedMaterial;
     }
   });

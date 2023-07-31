@@ -1,4 +1,6 @@
-import { AbstractMesh, Mesh, Vector3 } from "@babylonjs/core";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 
 export const moveUnit = (
   unit: AbstractMesh | Mesh,

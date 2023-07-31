@@ -1,4 +1,6 @@
-import { DynamicTexture, Scene, Tools } from "@babylonjs/core";
+import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
+import { Tools } from "@babylonjs/core/Misc/tools";
+import { Scene } from "@babylonjs/core/scene";
 
 import { Colors } from "../../constants/colors";
 import { HexParams } from "../../constants/hex";

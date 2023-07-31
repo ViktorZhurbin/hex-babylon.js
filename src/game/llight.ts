@@ -1,4 +1,6 @@
-import { HemisphericLight, Scene, Vector3 } from "@babylonjs/core";
+import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Scene } from "@babylonjs/core/scene";
 
 export const initLight = (scene: Scene) => {
   // This creates a light, aiming 0,1,0 - to the sky (non-mesh)

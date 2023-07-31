@@ -1,4 +1,7 @@
-import { Color3, HighlightLayer, Mesh, PickingInfo } from "@babylonjs/core";
+import { PickingInfo } from "@babylonjs/core/Collisions/pickingInfo";
+import { HighlightLayer } from "@babylonjs/core/Layers/highlightLayer";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Hex } from "honeycomb-grid";
 
 import { HexParams } from "../constants/hex";
@@ -39,9 +42,11 @@ export const onPickHex = (
   { hit, pickedMesh }: PickingInfo,
   highlight: HighlightLayer,
 ) => {
+  console.log("onPickHex 1", { hit, pickedMesh });
   if (!hit || !pickedMesh) {
     return;
   }
+  console.log("onPickHex 2");
 
   const isHex = pickedMesh.name === HexParams.Name;
   const isUnit = pickedMesh.name === Unit.BaseName;

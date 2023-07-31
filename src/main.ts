@@ -1,3 +1,5 @@
+import "@babylonjs/core/Rendering/edgesRenderer";
+
 import { initGame } from "./game";
 import "./style.css";
 

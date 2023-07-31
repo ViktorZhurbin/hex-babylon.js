@@ -1,9 +1,9 @@
-import { Engine } from "@babylonjs/core";
+import { Engine } from "@babylonjs/core/Engines/engine";
 
 import { createScene } from "./scene";
 
 export const initGame = async (canvas: HTMLCanvasElement) => {
-  const engine = new Engine(canvas);
+  const engine = new Engine(canvas, true, { stencil: true });
 
   // resize the scene when the browser window changes.
   window.addEventListener("resize", () => {

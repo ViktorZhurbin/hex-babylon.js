@@ -1,4 +1,7 @@
-import { ArcRotateCamera, Scene, Tools, Vector3 } from "@babylonjs/core";
+import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Tools } from "@babylonjs/core/Misc/tools";
+import { Scene } from "@babylonjs/core/scene";
 
 import { SIDE_LENGTH_PER_TRIBE } from "../constants/grid";
 
