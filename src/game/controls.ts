@@ -1,4 +1,5 @@
-import { HighlightLayer, Scene } from "@babylonjs/core";
+import { HighlightLayer } from "@babylonjs/core/Layers/highlightLayer";
+import { Scene } from "@babylonjs/core/scene";
 
 import { onPickHex } from "../map/onPickHex";
 

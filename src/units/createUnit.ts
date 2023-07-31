@@ -1,9 +1,7 @@
-import {
-  Color3,
-  CreateCylinder,
-  Scene,
-  StandardMaterial,
-} from "@babylonjs/core";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { CreateCylinder } from "@babylonjs/core/Meshes/Builders/cylinderBuilder";
+import { Scene } from "@babylonjs/core/scene";
 
 import { Unit } from "./constants";
 

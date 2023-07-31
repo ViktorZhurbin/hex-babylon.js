@@ -1,4 +1,4 @@
-import { Scene } from "@babylonjs/core";
+import { Scene } from "@babylonjs/core/scene";
 import { observable } from "@legendapp/state";
 import { Grid, Hex } from "honeycomb-grid";
 

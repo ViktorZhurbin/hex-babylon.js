@@ -1,4 +1,4 @@
-import { Scene } from "@babylonjs/core";
+import { Scene } from "@babylonjs/core/scene";
 import { ring } from "honeycomb-grid";
 
 import { TTribes } from "../constants/tribe";
