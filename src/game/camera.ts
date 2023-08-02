@@ -1,31 +1,78 @@
-import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
+import { UniversalCamera } from "@babylonjs/core/Cameras/universalCamera";
+import { KeyboardEventTypes } from "@babylonjs/core/Events/keyboardEvents";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Tools } from "@babylonjs/core/Misc/tools";
 import { Scene } from "@babylonjs/core/scene";
 
-import { SIDE_LENGTH_PER_TRIBE } from "../constants/grid";
+const movementSpeed = 2;
+const BOX_Y = 0.5;
 
-export const initCamera = (scene: Scene, canvas: HTMLCanvasElement) => {
-  const camera = new ArcRotateCamera(
-    "camera",
-    Tools.ToRadians(0),
-    Tools.ToRadians(45),
-    10,
-    Vector3.Zero(),
+export const initCamera = (scene: Scene) => {
+  const cameraRig = new TransformNode("cameraRig");
+  const box = cameraRig; //CreateBox("box");
+  box.position = new Vector3(0, BOX_Y, 0);
+
+  const camera = new UniversalCamera(
+    "UniversalCamera",
+    new Vector3(0, 8, -5),
     scene,
   );
 
-  camera.lowerAlphaLimit = 0;
-  camera.upperAlphaLimit = 0;
-  camera.lowerBetaLimit = 0.5;
-  camera.upperBetaLimit = 1.2;
+  camera.attachControl();
+  camera.speed = movementSpeed;
 
-  // This attaches the camera to the canvas
-  camera.attachControl(canvas);
+  camera.parent = box;
+  // camera.updateUpVectorFromRotation = true;
+  camera.rotation = new Vector3(Tools.ToRadians(40), 0, 0);
 
-  camera.radius = SIDE_LENGTH_PER_TRIBE * 9;
-  camera.lowerRadiusLimit = 6;
-  camera.upperRadiusLimit = camera.radius + 6;
+  // const w = 87;
+  // const s = 83;
+  // const d = 68;
+  // const a = 65;
+
+  // camera.keysUpward.push(w);
+  // camera.keysDownward.push(s);
+  // camera.keysRight.push(d);
+  // camera.keysLeft.push(a);
+
+  let newPosition = 0;
+  scene.onKeyboardObservable.add((kbInfo) => {
+    if (kbInfo.type === KeyboardEventTypes.KEYDOWN) {
+      switch (kbInfo.event.code) {
+        case "KeyA":
+        case "KeyS":
+          newPosition -= movementSpeed;
+          break;
+        case "KeyW":
+        case "KeyD":
+          newPosition += movementSpeed;
+          break;
+      }
+
+      let newVector = Vector3.Zero();
+      switch (kbInfo.event.code) {
+        case "KeyD":
+        case "KeyA":
+          newVector = new Vector3(newPosition, BOX_Y, 0);
+          break;
+
+        case "KeyW":
+        case "KeyS":
+          newVector = new Vector3(0, BOX_Y, newPosition);
+          break;
+      }
+
+      // https://www.youtube.com/watch?v=rnqF6S7PfFA
+      box.position = Vector3.Lerp(
+        box.position,
+        newVector,
+        scene.deltaTime / 1000,
+      );
+    } else if (kbInfo.type === KeyboardEventTypes.KEYUP) {
+      newPosition = 0;
+    }
+  });
 
   return camera;
 };

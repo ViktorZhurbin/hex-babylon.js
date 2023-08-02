@@ -11,13 +11,13 @@ import { initLight } from "./llight";
 
 export const createScene = async function (
   engine: Engine,
-  canvas: HTMLCanvasElement,
+  // canvas: HTMLCanvasElement,
 ) {
   const tribes = [Tribes.tribeOne, Tribes.tribeTwo];
 
   const scene = new Scene(engine);
 
-  initCamera(scene, canvas);
+  initCamera(scene);
   initLight(scene);
 
   createGrid(tribes.length, scene);
