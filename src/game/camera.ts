@@ -1,5 +1,5 @@
 import { UniversalCamera } from "@babylonjs/core/Cameras/universalCamera";
-import { KeyboardEventTypes } from "@babylonjs/core/Events/keyboardEvents";
+// import { KeyboardEventTypes } from "@babylonjs/core/Events/keyboardEvents";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Tools } from "@babylonjs/core/Misc/tools";
@@ -36,43 +36,43 @@ export const initCamera = (scene: Scene) => {
   // camera.keysRight.push(d);
   // camera.keysLeft.push(a);
 
-  let newPosition = 0;
-  scene.onKeyboardObservable.add((kbInfo) => {
-    if (kbInfo.type === KeyboardEventTypes.KEYDOWN) {
-      switch (kbInfo.event.code) {
-        case "KeyA":
-        case "KeyS":
-          newPosition -= movementSpeed;
-          break;
-        case "KeyW":
-        case "KeyD":
-          newPosition += movementSpeed;
-          break;
-      }
+  // let newPosition = 0;
+  // scene.onKeyboardObservable.add((kbInfo) => {
+  //   if (kbInfo.type === KeyboardEventTypes.KEYDOWN) {
+  //     switch (kbInfo.event.code) {
+  //       case "KeyA":
+  //       case "KeyS":
+  //         newPosition -= movementSpeed;
+  //         break;
+  //       case "KeyW":
+  //       case "KeyD":
+  //         newPosition += movementSpeed;
+  //         break;
+  //     }
 
-      let newVector = Vector3.Zero();
-      switch (kbInfo.event.code) {
-        case "KeyD":
-        case "KeyA":
-          newVector = new Vector3(newPosition, BOX_Y, 0);
-          break;
+  //     let newVector = Vector3.Zero();
+  //     switch (kbInfo.event.code) {
+  //       case "KeyD":
+  //       case "KeyA":
+  //         newVector = new Vector3(newPosition, BOX_Y, 0);
+  //         break;
 
-        case "KeyW":
-        case "KeyS":
-          newVector = new Vector3(0, BOX_Y, newPosition);
-          break;
-      }
+  //       case "KeyW":
+  //       case "KeyS":
+  //         newVector = new Vector3(0, BOX_Y, newPosition);
+  //         break;
+  //     }
 
-      // https://www.youtube.com/watch?v=rnqF6S7PfFA
-      box.position = Vector3.Lerp(
-        box.position,
-        newVector,
-        scene.deltaTime / 1000,
-      );
-    } else if (kbInfo.type === KeyboardEventTypes.KEYUP) {
-      newPosition = 0;
-    }
-  });
+  //     // https://www.youtube.com/watch?v=rnqF6S7PfFA
+  //     box.position = Vector3.Lerp(
+  //       box.position,
+  //       newVector,
+  //       scene.deltaTime / 1000,
+  //     );
+  //   } else if (kbInfo.type === KeyboardEventTypes.KEYUP) {
+  //     newPosition = 0;
+  //   }
+  // });
 
   return camera;
 };
