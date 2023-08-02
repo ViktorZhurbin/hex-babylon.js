@@ -1,17 +1,17 @@
 import { UniversalCamera } from "@babylonjs/core/Cameras/universalCamera";
 // import { KeyboardEventTypes } from "@babylonjs/core/Events/keyboardEvents";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-// import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-// import { Tools } from "@babylonjs/core/Misc/tools";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { Tools } from "@babylonjs/core/Misc/tools";
 import { Scene } from "@babylonjs/core/scene";
 
-// const movementSpeed = 2;
-// const BOX_Y = 0.5;
+const movementSpeed = 2;
+const BOX_Y = 0.5;
 
 export const initCamera = (scene: Scene) => {
-  // const cameraRig = new TransformNode("cameraRig");
-  // const box = cameraRig; //CreateBox("box");
-  // box.position = new Vector3(0, BOX_Y, 0);
+  const cameraRig = new TransformNode("cameraRig");
+  const box = cameraRig; //CreateBox("box");
+  box.position = new Vector3(0, BOX_Y, 0);
 
   const camera = new UniversalCamera(
     "UniversalCamera",
@@ -22,11 +22,11 @@ export const initCamera = (scene: Scene) => {
   camera.setTarget(new Vector3(0, 0, 0));
 
   camera.attachControl();
-  // camera.speed = movementSpeed;
+  camera.speed = movementSpeed;
 
-  // camera.parent = box;
+  camera.parent = box;
   // camera.updateUpVectorFromRotation = true;
-  // camera.rotation = new Vector3(Tools.ToRadians(40), 0, 0);
+  camera.rotation = new Vector3(Tools.ToRadians(40), 0, 0);
 
   // const w = 87;
   // const s = 83;
