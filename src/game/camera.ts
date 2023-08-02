@@ -15,11 +15,9 @@ export const initCamera = (scene: Scene) => {
 
   const camera = new UniversalCamera(
     "UniversalCamera",
-    new Vector3(0, 5, -5),
+    new Vector3(0, 8, -5),
     scene,
   );
-
-  camera.setTarget(new Vector3(0, 0, 0));
 
   camera.attachControl();
   camera.speed = movementSpeed;
