@@ -36,6 +36,10 @@ export const initCamera = (scene: Scene) => {
   // camera.keysRight.push(d);
   // camera.keysLeft.push(a);
 
+  scene.onPointerObservable.add((poinetrInfo, eventState) => {
+    console.log({ eventState, poinetrInfo });
+  });
+
   let newPosition = 0;
   scene.onKeyboardObservable.add((kbInfo) => {
     if (kbInfo.type === KeyboardEventTypes.KEYDOWN) {
