@@ -10,7 +10,7 @@ export const initGame = async (canvas: HTMLCanvasElement) => {
     engine.resize();
   });
 
-  const scene = await createScene(engine, canvas);
+  const scene = await createScene(engine);
 
   if (import.meta.env.DEV) {
     import("./debugLayer").then((module) => module.initDebugLayer(scene));
